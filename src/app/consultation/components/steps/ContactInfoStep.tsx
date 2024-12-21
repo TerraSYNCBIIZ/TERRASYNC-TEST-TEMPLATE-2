@@ -42,6 +42,9 @@ export default function ContactInfoStep({
     if (!formData.timezone) {
       newErrors.timezone = 'Please select your timezone';
     }
+    if (formData.companyRole && formData.companyRole.length > 100) {
+      newErrors.companyRole = 'Company role must be less than 100 characters';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

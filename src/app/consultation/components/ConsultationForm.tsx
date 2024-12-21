@@ -48,6 +48,7 @@ const initialFormData: FormData = {
   email: '',
   phone: '',
   preferredContactMethod: '',
+  companyRole: '',
   
   // Schedule Call
   preferredDate: '',

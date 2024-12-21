@@ -65,6 +65,7 @@ export interface FormData {
   email: string;
   phone: string;
   preferredContactMethod: string;
+  companyRole?: string;
 
   // Schedule Call
   preferredDate?: string;
