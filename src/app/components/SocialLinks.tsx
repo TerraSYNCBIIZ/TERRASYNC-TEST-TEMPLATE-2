@@ -1,3 +1,6 @@
+'use client';
+
+import Link from 'next/link';
 import { SOCIAL_LINKS } from '@/app/lib/constants';
 
 export function SocialLinks() {
