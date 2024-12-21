@@ -11,11 +11,15 @@ import ScheduleCallStep from './steps/ScheduleCallStep';
 import ProgressBar from './ProgressBar';
 
 export type FormData = {
-  // Business Information
+  // Business Info
   businessName: string;
   industry: string;
   businessSize: string;
   currentWebsite: string;
+  
+  // Website Type
+  websiteType: string;
+  otherDetails?: string;
   
   // Project Details
   projectGoals: string[];
@@ -23,27 +27,24 @@ export type FormData = {
   keyFeatures: string[];
   competitors: string;
   
-  // Website Type
-  websiteType: string;
-  ecommerceFeatures?: string[];
-  serviceFeatures?: string[];
-  contentFeatures?: string[];
-  
   // Budget & Timeline
   budget: string;
   timeline: string;
-  priority: string[];
   
-  // Contact Information
+  // Contact Info
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-  preferredContact: string;
+  companyRole: string;
   
-  // Additional Information
-  additionalNotes: string;
-  attachments: File[];
+  // Schedule Call
+  preferredDate: string;
+  preferredTime: string;
+  alternateDate: string;
+  alternateTime: string;
+  timezone: string;
+  additionalNotes?: string;
 };
 
 const steps = [
@@ -56,11 +57,40 @@ const steps = [
 ];
 
 const initialFormData: FormData = {
+  // Business Info
+  businessName: '',
+  industry: '',
+  businessSize: '',
+  currentWebsite: '',
+  
+  // Website Type
+  websiteType: '',
+  otherDetails: '',
+  
+  // Project Details
   projectGoals: [],
   targetAudience: '',
   keyFeatures: [],
   competitors: '',
-  // ... other form fields with their initial values
+  
+  // Budget & Timeline
+  budget: '',
+  timeline: '',
+  
+  // Contact Info
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  companyRole: '',
+  
+  // Schedule Call
+  preferredDate: '',
+  preferredTime: '',
+  alternateDate: '',
+  alternateTime: '',
+  timezone: 'ET',
+  additionalNotes: ''
 };
 
 export default function ConsultationForm() {
