@@ -132,7 +132,7 @@ export default function ContactForm() {
             Let's Discuss Your Project
           </h2>
           <p className="mt-4 text-base text-gray-500">
-            We&apos;ll get back to you as soon as possible. Can&apos;t wait? Call us directly.
+            We&apos;ll get back to you within 24 hours.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">

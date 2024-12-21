@@ -107,8 +107,8 @@ export default function PlatformPage() {
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Our platform bridges the gap between your vision and implementation, ensuring perfect alignment 
-                with your business goals. Whether you're exploring ideas or ready to start development, 
-                we're here to bring your vision to life.
+                with your business goals. Whether you&apos;re exploring ideas or ready to start development, 
+                we&apos;re here to bring your vision to life.
               </p>
             </div>
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">

@@ -94,7 +94,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="mt-6 text-lg leading-8 text-gray-600"
           >
-            We&apos;re here to help you succeed in the digital age.
+            We&apos;re here to help you succeed with McGinnis Technology Group.
           </motion.p>
           <motion.div
             variants={itemVariants}

@@ -71,10 +71,11 @@ export default function Footer() {
       <div className="container mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-12">
           <div className="space-y-16 xl:col-span-1">
-            <Link href="/" className="block relative">
+            <Link href="/" className="group block relative hover:opacity-100 transition-opacity">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-lg blur-md group-hover:blur-lg transition-all duration-500 opacity-0 group-hover:opacity-100" />
               <motion.div
                 whileHover={{ 
-                  scale: 1.02,
+                  scale: 1.01,
                   transition: { duration: 0.3 }
                 }}
               >
@@ -83,7 +84,7 @@ export default function Footer() {
                   alt="McGinnis Technology Group"
                   width={400}
                   height={89}
-                  className="h-24 w-auto relative"
+                  className="h-24 w-auto relative transition-transform duration-500"
                 />
               </motion.div>
             </Link>
@@ -95,7 +96,7 @@ export default function Footer() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-400 hover:text-gray-500"
+                  className="text-gray-600 hover:text-primary transition-colors"
                 >
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-7 w-7" aria-hidden="true" />
@@ -112,7 +113,7 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-lg text-gray-500 hover:text-gray-900"
+                        className="text-lg text-gray-600 hover:text-primary transition-colors"
                       >
                         {item.name}
                       </Link>
@@ -127,7 +128,7 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-lg text-gray-500 hover:text-gray-900"
+                        className="text-lg text-gray-600 hover:text-primary transition-colors"
                       >
                         {item.name}
                       </Link>
