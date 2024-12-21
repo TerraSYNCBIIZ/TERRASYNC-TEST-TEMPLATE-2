@@ -1,76 +1,124 @@
+'use client';
+
 import React, { useState, useRef } from "react";
 import { Image as ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 
 interface ImageUploadProps {
-  onImageChange: (file: File | null) => void;
+  onImageUpload: (file: File) => void;
+  onImageRemove: () => void;
+  defaultImage?: string;
+  className?: string;
 }
 
-export default function ImageUpload({ onImageChange }: ImageUploadProps) {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+export default function ImageUpload({
+  onImageUpload,
+  onImageRemove,
+  defaultImage,
+  className = ""
+}: ImageUploadProps) {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(defaultImage || null);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      onImageChange(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      handleFile(files[0]);
     }
   };
 
-  const removeImage = () => {
-    onImageChange(null);
-    setImagePreview(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+  const handleFile = (file: File) => {
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      onImageUpload(file);
     }
+  };
+
+  const handleRemove = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPreviewUrl(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    onImageRemove();
+  };
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
-    <div className="flex items-center justify-center w-full">
-      {imagePreview ? (
-        <div className="relative w-full h-64">
+    <div
+      className={`relative group cursor-pointer ${className}`}
+      onClick={handleClick}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        accept="image/*"
+        onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
+      />
+
+      {previewUrl ? (
+        <div className="relative w-full h-full min-h-[200px] rounded-lg overflow-hidden">
           <Image
-            src={imagePreview}
-            alt="Preview"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
+            src={previewUrl}
+            alt="Uploaded image"
+            fill
+            className="object-cover"
           />
           <button
-            type="button"
-            onClick={removeImage}
-            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full"
+            onClick={handleRemove}
+            className="absolute top-2 right-2 p-1 bg-white/80 hover:bg-white rounded-full shadow-lg transition-colors"
           >
-            <X size={20} />
+            <X className="w-5 h-5 text-gray-600" />
           </button>
         </div>
       ) : (
-        <label
-          htmlFor="image"
-          className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+        <div
+          className={`flex flex-col items-center justify-center w-full h-full min-h-[200px] rounded-lg border-2 border-dashed transition-colors ${
+            isDragging
+              ? 'border-primary bg-primary/5'
+              : 'border-gray-300 hover:border-primary/50 bg-gray-50'
+          }`}
         >
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <ImageIcon className="w-10 h-10 mb-3 text-gray-400" />
-            <p className="mb-2 text-sm text-gray-500">
-              <span className="font-semibold">Click to upload</span> or drag and drop
-            </p>
-            <p className="text-xs text-gray-500">PNG, JPG or GIF (MAX. 800x400px)</p>
-          </div>
-        </label>
+          <ImageIcon className="w-8 h-8 text-gray-400 mb-2" />
+          <p className="text-sm text-gray-500">
+            Click or drag image to upload
+          </p>
+        </div>
       )}
-      <input
-        type="file"
-        id="image"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="hidden"
-        ref={fileInputRef}
-      />
     </div>
   );
 }

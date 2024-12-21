@@ -39,7 +39,7 @@ export interface ScheduleCallData {
   additionalNotes?: string;
 }
 
-export interface FormData {
+export type FormData = {
   // Business Info
   businessName: string;
   industry: string;
@@ -66,6 +66,7 @@ export interface FormData {
   email: string;
   phone: string;
   companyRole: string;
+  preferredContactMethod: string;
   
   // Schedule Call
   preferredDate: string;
@@ -74,4 +75,4 @@ export interface FormData {
   alternateTime: string;
   timezone: string;
   additionalNotes?: string;
-} 
+}; 
