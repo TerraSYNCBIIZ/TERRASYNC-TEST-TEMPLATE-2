@@ -2,20 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-
-export interface ScheduleCallData {
-  preferredDate: string;
-  preferredTime: string;
-  alternateDate: string;
-  alternateTime: string;
-  timezone: string;
-  additionalNotes?: string;
-}
+import { FormData } from '../ConsultationForm';
 
 interface ScheduleCallStepProps {
-  onSubmit: (data: ScheduleCallData) => void;
+  formData: FormData;
   onBack: () => void;
-  initialData?: ScheduleCallData;
+  onSubmit: () => Promise<void>;
+  isSubmitting: boolean;
 }
 
 const timeSlots = [
@@ -32,15 +25,7 @@ const timezones = [
   { value: 'PT', label: 'Pacific Time (PT)' }
 ];
 
-export default function ScheduleCallStep({ onSubmit, onBack, initialData }: ScheduleCallStepProps) {
-  const [formData, setFormData] = useState<ScheduleCallData>(initialData || {
-    preferredDate: '',
-    preferredTime: '',
-    alternateDate: '',
-    alternateTime: '',
-    timezone: 'ET',
-    additionalNotes: ''
-  });
+export default function ScheduleCallStep({ formData, onBack, onSubmit, isSubmitting }: ScheduleCallStepProps) {
   const [error, setError] = useState<string>('');
 
   const handleSubmit = () => {
@@ -54,13 +39,7 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
       return;
     }
 
-    onSubmit(formData);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    setError('');
+    onSubmit();
   };
 
   // Get tomorrow's date as the minimum selectable date
@@ -105,7 +84,7 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
               name="preferredDate"
               min={minDate}
               value={formData.preferredDate}
-              onChange={handleChange}
+              onChange={(e) => formData.preferredDate = e.target.value}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             />
           </div>
@@ -117,7 +96,7 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
               id="preferredTime"
               name="preferredTime"
               value={formData.preferredTime}
-              onChange={handleChange}
+              onChange={(e) => formData.preferredTime = e.target.value}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             >
               <option value="">Select a time</option>
@@ -142,7 +121,7 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
               name="alternateDate"
               min={minDate}
               value={formData.alternateDate}
-              onChange={handleChange}
+              onChange={(e) => formData.alternateDate = e.target.value}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             />
           </div>
@@ -154,7 +133,7 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
               id="alternateTime"
               name="alternateTime"
               value={formData.alternateTime}
-              onChange={handleChange}
+              onChange={(e) => formData.alternateTime = e.target.value}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             >
               <option value="">Select a time</option>
@@ -174,7 +153,7 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
           id="timezone"
           name="timezone"
           value={formData.timezone}
-          onChange={handleChange}
+          onChange={(e) => formData.timezone = e.target.value}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
         >
           {timezones.map(tz => (
@@ -192,7 +171,7 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
           name="additionalNotes"
           rows={4}
           value={formData.additionalNotes}
-          onChange={handleChange}
+          onChange={(e) => formData.additionalNotes = e.target.value}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
           placeholder="Any specific topics you'd like to discuss or questions you have..."
         />
@@ -212,12 +191,15 @@ export default function ScheduleCallStep({ onSubmit, onBack, initialData }: Sche
         <button
           type="button"
           onClick={handleSubmit}
-          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          disabled={isSubmitting}
+          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Schedule Consultation
-          <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
+          {isSubmitting ? 'Submitting...' : 'Schedule Consultation'}
+          {!isSubmitting && (
+            <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          )}
         </button>
       </div>
     </motion.div>

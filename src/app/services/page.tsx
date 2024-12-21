@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import HeroSection from './components/HeroSection';
 import ServicesOverview from './components/ServicesOverview';
 import ServiceDetails from './components/ServiceDetails';
-import CaseStudies from './components/CaseStudies';
 import FaqSection from './components/FaqSection';
 import CtaSection from './components/CtaSection';
+import SuccessStories from './components/SuccessStories';
 
 export const metadata: Metadata = {
-  title: 'Services | McGinnis Technology Group',
-  description: 'Discover our comprehensive web development and digital transformation services.',
+  title: 'Our Services | McGinnis Technology Group',
+  description: 'Explore our comprehensive web development and digital transformation services.',
 };
 
 export default function ServicesPage() {
@@ -17,7 +17,7 @@ export default function ServicesPage() {
       <HeroSection />
       <ServicesOverview />
       <ServiceDetails />
-      <CaseStudies />
+      <SuccessStories />
       <FaqSection />
       <CtaSection />
     </main>
