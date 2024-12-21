@@ -71,23 +71,25 @@ export default function Footer() {
       <div className="container mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-12">
           <div className="space-y-16 xl:col-span-1">
-            <Link href="/" className="group block relative hover:opacity-100 transition-opacity">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-lg blur-md group-hover:blur-lg transition-all duration-500 opacity-0 group-hover:opacity-100" />
-              <motion.div
-                whileHover={{ 
-                  scale: 1.01,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <Image
-                  src="/Images/Logo.png"
-                  alt="McGinnis Technology Group"
-                  width={400}
-                  height={89}
-                  className="h-24 w-auto relative transition-transform duration-500"
-                />
-              </motion.div>
-            </Link>
+            <div className="relative w-fit">
+              <Link href="/" className="group block relative hover:opacity-100 transition-opacity">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-lg blur-md group-hover:blur-lg transition-all duration-500 opacity-0 group-hover:opacity-100" />
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.01,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <Image
+                    src="/Images/Logo.png"
+                    alt="McGinnis Technology Group"
+                    width={400}
+                    height={89}
+                    className="h-24 w-auto relative transition-transform duration-500"
+                  />
+                </motion.div>
+              </Link>
+            </div>
             <p className="text-lg text-gray-500">
               Elevating Your Digital Vision with Innovative Technology Solutions
             </p>
