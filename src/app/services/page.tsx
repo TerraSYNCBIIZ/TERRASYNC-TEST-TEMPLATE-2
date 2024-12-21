@@ -5,6 +5,7 @@ import ServiceDetails from './components/ServiceDetails';
 import FaqSection from './components/FaqSection';
 import CtaSection from './components/CtaSection';
 import SuccessStories from './components/SuccessStories';
+import PricingSection from './components/PricingSection';
 
 export const metadata: Metadata = {
   title: 'Our Services | McGinnis Technology Group',
@@ -17,6 +18,7 @@ export default function ServicesPage() {
       <HeroSection />
       <ServicesOverview />
       <ServiceDetails />
+      <PricingSection />
       <SuccessStories />
       <FaqSection />
       <CtaSection />

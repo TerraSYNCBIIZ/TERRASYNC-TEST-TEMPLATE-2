@@ -3,6 +3,7 @@ import { Montserrat, Roboto } from "next/font/google";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { LoadingProvider } from './components/providers/LoadingProvider';
+import PromotionalPopup from './components/shared/PromotionalPopup';
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="en" className={`${montserrat.variable} ${roboto.variable}`}>
       <body className="min-h-screen flex flex-col">
         <LoadingProvider>
+          <PromotionalPopup />
           <Header />
           <main className="flex-grow pt-20">{children}</main>
           <Footer />
