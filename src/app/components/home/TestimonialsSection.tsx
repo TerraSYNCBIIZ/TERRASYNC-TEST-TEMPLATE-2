@@ -4,31 +4,53 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import SectionHeading from '../shared/SectionHeading';
+import ComingSoonOverlay from '@/app/components/shared/ComingSoonOverlay';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5
+    }
+  }
+};
 
 const testimonials = [
   {
-    content: "Working with McGinnis Technology Group was a game-changer for our business. Their team delivered a custom solution that perfectly matched our needs and exceeded our expectations.",
-    author: "John Smith",
-    role: "CEO",
-    company: "TechCorp Inc.",
-    image: "/testimonials/image_fx_ (25).jpg",
-    gradient: "from-purple-500 to-indigo-500"
+    content: "Working with McGinnis Technology Group was a game-changer for our business. Their expertise and dedication transformed our digital presence.",
+    author: {
+      name: "John Smith",
+      role: "CEO at TechCorp Inc.",
+      image: "/team/placeholder.jpg"
+    }
   },
   {
-    content: "The expertise and professionalism of the McGinnis Technology Group team is unmatched. They transformed our digital presence and helped us achieve remarkable growth.",
-    author: "Emma Davis",
-    role: "Marketing Director",
-    company: "Growth Dynamics",
-    image: "/testimonials/image_fx_ (26).jpg",
-    gradient: "from-blue-500 to-cyan-500"
+    content: "The team's attention to detail and innovative solutions helped us achieve our goals faster than we thought possible.",
+    author: {
+      name: "Sarah Johnson",
+      role: "Marketing Director at InnovateCo",
+      image: "/team/placeholder.jpg"
+    }
   },
   {
-    content: "McGinnis Technology Group's attention to detail and commitment to quality is exceptional. They're not just service providers, they're true partners in our success.",
-    author: "Robert Johnson",
-    role: "CTO",
-    company: "InnovateX",
-    image: "/testimonials/image_fx_ (27).jpg",
-    gradient: "from-teal-500 to-green-500"
+    content: "Their commitment to excellence and customer satisfaction sets them apart. We couldn't be happier with the results.",
+    author: {
+      name: "Michael Chen",
+      role: "Founder of StartupXYZ",
+      image: "/team/placeholder.jpg"
+    }
   }
 ];
 
@@ -74,121 +96,59 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="py-24 sm:py-32 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
+    <section className="relative py-24 sm:py-32 bg-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <SectionHeading
-          title="What Our Clients Say"
-          subtitle="Don't just take our word for it - hear from some of our satisfied clients about their experience working with us."
-          centered
-        />
+        <div className="mx-auto max-w-2xl text-center mb-16">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            What Our Clients Say
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-gray-600">
+            Don&apos;t just take our word for it - hear from some of our satisfied clients about their experience working with us.
+          </p>
+        </div>
 
-        <div className="relative mt-16">
-          {/* Navigation Buttons */}
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
-            <button
-              onClick={() => paginate(-1)}
-              className="p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label="Previous testimonial"
-            >
-              <svg className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-              </svg>
-            </button>
-          </div>
-
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10">
-            <button
-              onClick={() => paginate(1)}
-              className="p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label="Next testimonial"
-            >
-              <svg className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Testimonials */}
-          <div className="relative h-[400px] mx-12 overflow-hidden">
-            <AnimatePresence initial={false} custom={current}>
+        <div className="relative">
+          <ComingSoonOverlay 
+            message="Client Testimonials Coming Soon" 
+            subMessage="We're gathering feedback from our valued clients to share their success stories with you." 
+          />
+          
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {testimonials.map((testimonial, index) => (
               <motion.div
-                key={current}
-                custom={current}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 }
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={1}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = swipePower(offset.x, velocity.x);
-
-                  if (swipe < -swipeConfidenceThreshold) {
-                    paginate(1);
-                  } else if (swipe > swipeConfidenceThreshold) {
-                    paginate(-1);
-                  }
-                }}
-                className="absolute w-full h-full flex items-center justify-center"
+                key={index}
+                variants={itemVariants}
+                className="relative rounded-2xl bg-white p-6 shadow-lg ring-1 ring-gray-900/5"
               >
-                <div className="w-full max-w-3xl mx-auto">
-                  <div className="relative overflow-hidden rounded-2xl bg-white p-12 shadow-lg ring-1 ring-gray-200">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${testimonials[current].gradient} opacity-5`} />
-                    
-                    <div className="relative">
-                      <svg className="absolute top-0 left-0 h-12 w-12 -translate-x-6 -translate-y-8 text-gray-200 transform rotate-12" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
-                        <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                      </svg>
-                      
-                      <div className="relative mt-6">
-                        <p className="text-xl text-gray-600 leading-8">
-                          &quot;Working with McGinnis Technology Group was a game-changer for our business&quot;
-                        </p>
-                      </div>
-
-                      <div className="mt-8 flex items-center gap-4">
-                        <div className="relative h-12 w-12 overflow-hidden rounded-full ring-4 ring-white">
-                          <Image
-                            className="h-12 w-12 object-cover"
-                            src={testimonials[current].image}
-                            alt={testimonials[current].author}
-                            width={48}
-                            height={48}
-                          />
-                        </div>
-                        <div>
-                          <div className="font-semibold text-gray-900">{testimonials[current].author}</div>
-                          <div className="text-sm text-gray-600">{testimonials[current].role} at {testimonials[current].company}</div>
-                        </div>
-                      </div>
-                    </div>
+                <div className="flex items-center gap-x-4 border-b border-gray-900/5 pb-6">
+                  <Image
+                    src={testimonial.author.image}
+                    alt={testimonial.author.name}
+                    className="h-12 w-12 rounded-full bg-gray-50 object-cover"
+                    width={48}
+                    height={48}
+                  />
+                  <div>
+                    <h3 className="font-semibold leading-7 tracking-tight text-gray-900">
+                      {testimonial.author.name}
+                    </h3>
+                    <p className="text-sm leading-6 text-gray-600">
+                      {testimonial.author.role}
+                    </p>
                   </div>
                 </div>
+                <blockquote className="mt-6 text-base leading-7 text-gray-600">
+                  {testimonial.content}
+                </blockquote>
               </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Dots */}
-          <div className="mt-8 flex justify-center gap-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setAutoplay(false);
-                  setCurrent(index);
-                }}
-                className={`h-2 w-2 rounded-full transition-colors duration-200 ${
-                  index === current ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

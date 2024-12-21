@@ -1,9 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { SparklesIcon } from '@heroicons/react/24/outline';
-import VoiceInput from '../../components/VoiceInput';
-import type { FormData } from '../ConsultationForm';
+import { motion } from 'framer-motion';
+import { FormData } from '../ConsultationForm';
 
 interface ProjectDetailsStepProps {
   formData: FormData;
@@ -12,307 +10,178 @@ interface ProjectDetailsStepProps {
   updateFormData: (data: Partial<FormData>) => void;
 }
 
-type ProjectDetailsData = Pick<FormData, 'projectGoals' | 'targetAudience' | 'keyFeatures' | 'competitors'>;
+const projectGoalOptions = [
+  'Increase Online Sales',
+  'Improve User Experience',
+  'Enhance Brand Image',
+  'Expand Market Reach',
+  'Streamline Operations',
+  'Mobile App Development',
+  'Custom Software Solution',
+  'Website Redesign'
+];
 
-const defaultFormData: ProjectDetailsData = {
-  projectGoals: [],
-  targetAudience: '',
-  keyFeatures: [],
-  competitors: ''
-};
+const featureOptions = [
+  'User Authentication',
+  'Payment Processing',
+  'Content Management',
+  'Analytics Dashboard',
+  'API Integration',
+  'Search Functionality',
+  'Real-time Updates',
+  'Mobile Responsiveness'
+];
 
 export default function ProjectDetailsStep({
-  formData = defaultFormData,
+  formData,
   onNext,
   onBack,
-  updateFormData,
+  updateFormData
 }: ProjectDetailsStepProps) {
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isImproving, setIsImproving] = useState<Record<string, boolean>>({});
-  const [localFormData, setLocalFormData] = useState<ProjectDetailsData>({
-    projectGoals: formData?.projectGoals || [],
-    targetAudience: formData?.targetAudience || '',
-    keyFeatures: formData?.keyFeatures || [],
-    competitors: formData?.competitors || ''
-  });
+  const handleGoalToggle = (goal: string) => {
+    const newGoals = formData.projectGoals.includes(goal)
+      ? formData.projectGoals.filter(g => g !== goal)
+      : [...formData.projectGoals, goal];
+    updateFormData({ projectGoals: newGoals });
+  };
 
-  useEffect(() => {
-    if (formData) {
-      setLocalFormData({
-        projectGoals: formData.projectGoals || [],
-        targetAudience: formData.targetAudience || '',
-        keyFeatures: formData.keyFeatures || [],
-        competitors: formData.competitors || ''
-      });
-    }
-  }, [formData]);
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!localFormData.projectGoals?.length) {
-      newErrors.projectGoals = 'Please describe your project goals';
-    }
-    if (!localFormData.targetAudience?.trim()) {
-      newErrors.targetAudience = 'Please describe your target audience';
-    }
-    if (!localFormData.keyFeatures?.length) {
-      newErrors.keyFeatures = 'Please list your desired key features';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const handleFeatureToggle = (feature: string) => {
+    const newFeatures = formData.keyFeatures.includes(feature)
+      ? formData.keyFeatures.filter(f => f !== feature)
+      : [...formData.keyFeatures, feature];
+    updateFormData({ keyFeatures: newFeatures });
   };
 
   const handleNext = () => {
-    if (validateForm()) {
-      try {
-        updateFormData({
-          projectGoals: localFormData.projectGoals,
-          targetAudience: localFormData.targetAudience,
-          keyFeatures: localFormData.keyFeatures,
-          competitors: localFormData.competitors
-        });
-        onNext();
-      } catch (error) {
-        console.error('Error updating form data:', error);
-      }
+    if (formData.projectGoals.length === 0) {
+      // Show error or alert
+      return;
     }
-  };
-
-  const handleImproveText = async (field: keyof ProjectDetailsData) => {
-    setIsImproving({ ...isImproving, [field]: true });
-    try {
-      const response = await fetch('/api/improve-text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: field === 'projectGoals' || field === 'keyFeatures' 
-            ? localFormData[field].join('\n') 
-            : localFormData[field],
-          field,
-        }),
-      });
-      
-      if (!response.ok) throw new Error('Failed to improve text');
-      
-      const data = await response.json();
-      const improvedText = data.improvedText;
-
-      const newData = { ...localFormData };
-      if (field === 'projectGoals' || field === 'keyFeatures') {
-        newData[field] = improvedText.split('\n').filter(Boolean);
-      } else {
-        newData[field] = improvedText;
-      }
-      setLocalFormData(newData);
-      updateFormData({
-        [field]: newData[field]
-      });
-    } catch (error) {
-      console.error('Error improving text:', error);
-    } finally {
-      setIsImproving({ ...isImproving, [field]: false });
-    }
-  };
-
-  const handleInputChange = (field: keyof ProjectDetailsData, value: string) => {
-    try {
-      const newData = { ...localFormData };
-      if (field === 'projectGoals' || field === 'keyFeatures') {
-        newData[field] = value.split('\n').filter(Boolean);
-      } else {
-        newData[field] = value;
-      }
-      setLocalFormData(newData);
-      if (errors[field]) {
-        setErrors({ ...errors, [field]: '' });
-      }
-    } catch (error) {
-      console.error('Error updating form data:', error);
-    }
+    onNext();
   };
 
   return (
-    <div className="space-y-6 max-w-2xl mx-auto px-4">
-      <div className="space-y-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="space-y-8"
+    >
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900">
+          Project Details
+        </h2>
+        <p className="mt-2 text-gray-600">
+          Help us understand your project goals and requirements.
+        </p>
+      </div>
+
+      <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Project Goals
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            What are your project goals? (Select all that apply)
           </label>
-          <div className="relative">
-            <textarea
-              value={localFormData.projectGoals.join('\n')}
-              onChange={(e) => handleInputChange('projectGoals', e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 ${
-                errors.projectGoals ? 'border-red-500' : 'border-gray-300'
-              }`}
-              rows={4}
-              placeholder="Describe what you want to achieve with this project..."
-            />
-            <div className="absolute right-2 top-2 flex gap-2">
-              <VoiceInput
-                onResult={(text: string) => {
-                  handleInputChange('projectGoals', text);
-                }}
-                className="bg-white"
-              />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {projectGoalOptions.map((goal) => (
               <button
+                key={goal}
                 type="button"
-                onClick={() => handleImproveText('projectGoals')}
-                className="p-2 rounded-full hover:bg-gray-100 transition-all group relative"
-                disabled={isImproving.projectGoals || !localFormData.projectGoals.length}
+                onClick={() => handleGoalToggle(goal)}
+                className={`flex items-center justify-between px-4 py-3 rounded-lg border ${
+                  formData.projectGoals.includes(goal)
+                    ? 'border-primary bg-primary/5 text-primary'
+                    : 'border-gray-200 hover:border-primary/50'
+                }`}
               >
-                <SparklesIcon className={`h-5 w-5 ${isImproving.projectGoals ? 'animate-pulse text-primary' : 'text-gray-500'}`} />
-                <span className="sr-only">Improve with AI</span>
-                <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                  Improve with AI
-                </span>
+                <span className="text-sm">{goal}</span>
+                {formData.projectGoals.includes(goal) && (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                )}
               </button>
-            </div>
-            {errors.projectGoals && (
-              <p className="mt-1 text-sm text-red-500">{errors.projectGoals}</p>
-            )}
+            ))}
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Target Audience
+          <label htmlFor="targetAudience" className="block text-sm font-medium text-gray-700">
+            Who is your target audience?
           </label>
-          <div className="relative">
-            <textarea
-              value={localFormData.targetAudience}
-              onChange={(e) => handleInputChange('targetAudience', e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 ${
-                errors.targetAudience ? 'border-red-500' : 'border-gray-300'
-              }`}
-              rows={4}
-              placeholder="Describe your ideal users or customers..."
-            />
-            <div className="absolute right-2 top-2 flex gap-2">
-              <VoiceInput
-                onResult={(text: string) => {
-                  handleInputChange('targetAudience', text);
-                }}
-                className="bg-white"
-              />
+          <textarea
+            id="targetAudience"
+            rows={3}
+            value={formData.targetAudience}
+            onChange={(e) => updateFormData({ targetAudience: e.target.value })}
+            className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            placeholder="Describe your ideal users or customers..."
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            What key features do you need? (Select all that apply)
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {featureOptions.map((feature) => (
               <button
+                key={feature}
                 type="button"
-                onClick={() => handleImproveText('targetAudience')}
-                className="p-2 rounded-full hover:bg-gray-100 transition-all group relative"
-                disabled={isImproving.targetAudience || !localFormData.targetAudience.trim()}
+                onClick={() => handleFeatureToggle(feature)}
+                className={`flex items-center justify-between px-4 py-3 rounded-lg border ${
+                  formData.keyFeatures.includes(feature)
+                    ? 'border-primary bg-primary/5 text-primary'
+                    : 'border-gray-200 hover:border-primary/50'
+                }`}
               >
-                <SparklesIcon className={`h-5 w-5 ${isImproving.targetAudience ? 'animate-pulse text-primary' : 'text-gray-500'}`} />
-                <span className="sr-only">Improve with AI</span>
-                <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                  Improve with AI
-                </span>
+                <span className="text-sm">{feature}</span>
+                {formData.keyFeatures.includes(feature) && (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                )}
               </button>
-            </div>
-            {errors.targetAudience && (
-              <p className="mt-1 text-sm text-red-500">{errors.targetAudience}</p>
-            )}
+            ))}
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Key Features
+          <label htmlFor="competitors" className="block text-sm font-medium text-gray-700">
+            Who are your main competitors?
           </label>
-          <div className="relative">
-            <textarea
-              value={localFormData.keyFeatures.join('\n')}
-              onChange={(e) => handleInputChange('keyFeatures', e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 ${
-                errors.keyFeatures ? 'border-red-500' : 'border-gray-300'
-              }`}
-              rows={4}
-              placeholder="List the main features or functionality you want..."
-            />
-            <div className="absolute right-2 top-2 flex gap-2">
-              <VoiceInput
-                onResult={(text: string) => {
-                  handleInputChange('keyFeatures', text);
-                }}
-                className="bg-white"
-              />
-              <button
-                type="button"
-                onClick={() => handleImproveText('keyFeatures')}
-                className="p-2 rounded-full hover:bg-gray-100 transition-all group relative"
-                disabled={isImproving.keyFeatures || !localFormData.keyFeatures.length}
-              >
-                <SparklesIcon className={`h-5 w-5 ${isImproving.keyFeatures ? 'animate-pulse text-primary' : 'text-gray-500'}`} />
-                <span className="sr-only">Improve with AI</span>
-                <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                  Improve with AI
-                </span>
-              </button>
-            </div>
-            {errors.keyFeatures && (
-              <p className="mt-1 text-sm text-red-500">{errors.keyFeatures}</p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Competitors or Reference Sites
-          </label>
-          <div className="relative">
-            <textarea
-              value={localFormData.competitors}
-              onChange={(e) => handleInputChange('competitors', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20"
-              rows={4}
-              placeholder="Share any websites you like or competitors you want to reference..."
-            />
-            <div className="absolute right-2 top-2 flex gap-2">
-              <VoiceInput
-                onResult={(text: string) => {
-                  handleInputChange('competitors', text);
-                }}
-                className="bg-white"
-              />
-              <button
-                type="button"
-                onClick={() => handleImproveText('competitors')}
-                className="p-2 rounded-full hover:bg-gray-100 transition-all group relative"
-                disabled={isImproving.competitors || !localFormData.competitors.trim()}
-              >
-                <SparklesIcon className={`h-5 w-5 ${isImproving.competitors ? 'animate-pulse text-primary' : 'text-gray-500'}`} />
-                <span className="sr-only">Improve with AI</span>
-                <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                  Improve with AI
-                </span>
-              </button>
-            </div>
-          </div>
-          <p className="mt-1 text-sm text-gray-500">
-            Our AI will analyze their features.
-          </p>
+          <textarea
+            id="competitors"
+            rows={3}
+            value={formData.competitors}
+            onChange={(e) => updateFormData({ competitors: e.target.value })}
+            className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            placeholder="List your main competitors and any specific features you'd like to highlight..."
+          />
         </div>
       </div>
 
-      <div className="flex justify-between pt-6">
+      <div className="flex justify-between">
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+          className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
         >
+          <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
           Back
         </button>
         <button
           type="button"
           onClick={handleNext}
-          className="flex items-center px-6 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           Next Step
+          <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 } 
