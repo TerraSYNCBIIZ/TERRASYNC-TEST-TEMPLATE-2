@@ -20,9 +20,9 @@ export const metadata = {
   title: "McGinnis Technology Group | Custom Web Solutions",
   description: "We create custom web solutions that help businesses thrive in the digital age. Our services include web development, UI/UX design, and digital transformation.",
   icons: {
-    icon: '/Images/Logosmall.png',
-    shortcut: '/Images/Logosmall.png',
-    apple: '/Images/Logosmall.png',
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon' }
+    ],
   },
 };
 
@@ -33,10 +33,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${montserrat.variable} ${roboto.variable}`}>
-      <head>
-        <link rel="icon" type="image/png" href="/Images/Logosmall.png" />
-        <link rel="apple-touch-icon" href="/Images/Logosmall.png" />
-      </head>
       <body className="min-h-screen flex flex-col">
         <LoadingProvider>
           <PromotionalPopup />
