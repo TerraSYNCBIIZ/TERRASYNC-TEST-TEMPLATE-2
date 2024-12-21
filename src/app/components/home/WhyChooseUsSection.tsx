@@ -24,18 +24,18 @@ const features = [
       </svg>
     ),
     gradient: 'from-purple-500 to-pink-400',
-    metrics: ['24/7 Support', '1hr Response', 'Expert Team'],
+    metrics: ['24/7 Support', 'Quick Response', 'Expert Team'],
   },
   {
     name: 'Quality Focus',
-    description: 'Our efficient approach ensures high-quality results through rigorous testing and attention to detail.',
+    description: 'We maintain high standards in every project, ensuring your website not only looks great but performs exceptionally well.',
     icon: (
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
       </svg>
     ),
     gradient: 'from-green-500 to-emerald-400',
-    metrics: ['Code Reviews', 'Testing', 'Best Practices'],
+    metrics: ['Best Practices', 'Modern Tech', 'Clean Code'],
   },
   {
     name: 'Agile Process',

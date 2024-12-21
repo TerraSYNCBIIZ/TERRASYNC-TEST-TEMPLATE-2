@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-const stats = [
-  { label: 'Project Timeline', value: 'Days Not Months' },
-  { label: 'Development Process', value: 'Agile & Fast' },
-  { label: 'Support Response', value: '24/7' },
+const highlights = [
+  { label: 'Rapid Delivery', value: 'Days Not Months' },
+  { label: 'Project Focus', value: 'One at a Time' },
+  { label: 'Support', value: '24/7 Available' },
 ];
 
 export default function HeroSection() {
@@ -75,7 +75,7 @@ export default function HeroSection() {
             </Link>
           </motion.div>
 
-          {/* Stats */}
+          {/* Value Propositions */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -83,11 +83,11 @@ export default function HeroSection() {
             className="mt-16 pt-8 border-t border-gray-100"
           >
             <dl className="grid grid-cols-1 gap-y-8 gap-x-8 sm:grid-cols-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="mx-auto flex flex-col gap-y-2 text-center">
-                  <dt className="text-base leading-7 text-gray-600">{stat.label}</dt>
+              {highlights.map((item) => (
+                <div key={item.label} className="mx-auto flex flex-col gap-y-2 text-center">
+                  <dt className="text-base leading-7 text-gray-600">{item.label}</dt>
                   <dd className="order-first text-3xl font-semibold tracking-tight text-primary">
-                    {stat.value}
+                    {item.value}
                   </dd>
                 </div>
               ))}

@@ -29,36 +29,36 @@ const successStories = [
   {
     title: 'Custom E-commerce Platform',
     category: 'Case Study',
-    industry: 'Fashion Retailer',
-    description: 'A modern e-commerce platform with real-time inventory management and AI-powered recommendations.',
+    industry: 'Fashion Retail',
+    description: 'A modern e-commerce platform with real-time inventory management and personalized shopping experiences.',
     image: '/Images/success-stories/ecommerce.jpg',
     metrics: [
       { value: 'Real-time', label: 'Inventory' },
-      { value: 'Smart', label: 'Analytics' },
-      { value: 'AI', label: 'Powered' }
+      { value: 'Smart', label: 'Recommendations' },
+      { value: 'Seamless', label: 'Checkout' }
     ]
   },
   {
     title: 'SaaS Analytics Dashboard',
     category: 'Case Study',
-    industry: 'Tech Startup',
-    description: 'An intuitive dashboard for data-driven decisions and optimized operations.',
+    industry: 'Tech Platform',
+    description: 'Built a real-time analytics dashboard that helps businesses make data-driven decisions and optimize operations.',
     image: '/Images/success-stories/dashboard.jpg',
     metrics: [
-      { value: 'Fast', label: 'Processing' },
-      { value: 'Rich', label: 'Features' },
+      { value: 'Real-time', label: 'Data' },
+      { value: 'Custom', label: 'Reports' },
       { value: 'Smart', label: 'Insights' }
     ]
   },
   {
     title: 'Mobile Marketplace App',
     category: 'Case Study',
-    industry: 'Service Provider',
-    description: 'A marketplace app connecting service providers with customers, featuring real-time matching.',
+    industry: 'Service Platform',
+    description: 'Created a marketplace app that connects service providers with customers, featuring real-time matching and scheduling.',
     image: '/Images/success-stories/marketplace.jpg',
     metrics: [
-      { value: 'Real-time', label: 'Matching' },
-      { value: 'Smart', label: 'Routing' },
+      { value: 'Instant', label: 'Matching' },
+      { value: 'Smart', label: 'Scheduling' },
       { value: 'Secure', label: 'Payments' }
     ]
   }
