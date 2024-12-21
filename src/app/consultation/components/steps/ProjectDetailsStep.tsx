@@ -3,6 +3,13 @@
 import { motion } from 'framer-motion';
 import { FormData } from '../ConsultationForm';
 
+export interface ProjectDetailsData {
+  projectGoals: string[];
+  targetAudience: string;
+  keyFeatures: string[];
+  competitors: string;
+}
+
 interface ProjectDetailsStepProps {
   formData: FormData;
   onNext: () => void;
