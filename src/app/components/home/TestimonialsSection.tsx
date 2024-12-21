@@ -7,7 +7,7 @@ import SectionHeading from '../shared/SectionHeading';
 
 const testimonials = [
   {
-    content: "Working with CodeSync was a game-changer for our business. Their team delivered a custom solution that perfectly matched our needs and exceeded our expectations.",
+    content: "Working with McGinnis Technology Group was a game-changer for our business. Their team delivered a custom solution that perfectly matched our needs and exceeded our expectations.",
     author: "John Smith",
     role: "CEO",
     company: "TechCorp Inc.",
@@ -15,7 +15,7 @@ const testimonials = [
     gradient: "from-purple-500 to-indigo-500"
   },
   {
-    content: "The expertise and professionalism of the CodeSync team is unmatched. They transformed our digital presence and helped us achieve remarkable growth.",
+    content: "The expertise and professionalism of the McGinnis Technology Group team is unmatched. They transformed our digital presence and helped us achieve remarkable growth.",
     author: "Emma Davis",
     role: "Marketing Director",
     company: "Growth Dynamics",
@@ -23,7 +23,7 @@ const testimonials = [
     gradient: "from-blue-500 to-cyan-500"
   },
   {
-    content: "CodeSync's attention to detail and commitment to quality is exceptional. They're not just service providers, they're true partners in our success.",
+    content: "McGinnis Technology Group's attention to detail and commitment to quality is exceptional. They're not just service providers, they're true partners in our success.",
     author: "Robert Johnson",
     role: "CTO",
     company: "InnovateX",
@@ -147,7 +147,7 @@ export default function TestimonialsSection() {
                       
                       <div className="relative mt-6">
                         <p className="text-xl text-gray-600 leading-8">
-                          "{testimonials[current].content}"
+                          &quot;Working with McGinnis Technology Group was a game-changer for our business&quot;
                         </p>
                       </div>
 

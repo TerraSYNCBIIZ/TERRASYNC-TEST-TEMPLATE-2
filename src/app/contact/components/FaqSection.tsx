@@ -77,8 +77,8 @@ export default function FaqSection() {
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-lg leading-8 text-gray-600">
-            Can't find the answer you're looking for? Reach out to our team.
+          <p className="mt-4 text-base text-gray-500">
+            Here&apos;s what you need to know. Can&apos;t find your answer? Contact us.
           </p>
         </motion.div>
 

@@ -55,9 +55,8 @@ export default function CtaSection() {
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Have Knowledge to Share?
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Join our community of tech experts and share your insights with our readers.
-            We're always looking for guest contributors and technical writers.
+          <p className="mt-4 text-base text-gray-500">
+            Let&apos;s create something amazing together. Our team is ready to help you succeed.
           </p>
           <motion.div
             variants={itemVariants}

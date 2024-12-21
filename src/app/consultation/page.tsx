@@ -162,8 +162,8 @@ export default function ConsultationPage() {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               Free Consultation
             </h1>
-            <p className="text-lg text-gray-600">
-              Let's discuss your project and find the perfect solution for your business.
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              We&apos;re here to help you achieve your digital goals. Let&apos;s discuss your project and find the best solution together.
             </p>
           </div>
 

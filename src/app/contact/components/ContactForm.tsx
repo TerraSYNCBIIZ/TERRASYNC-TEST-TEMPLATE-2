@@ -131,8 +131,8 @@ export default function ContactForm() {
           <h2 className="text-3xl font-bold tracking-tight text-gray-900">
             Let's Discuss Your Project
           </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
-            Fill out the form below and we'll get back to you within 24 hours.
+          <p className="mt-4 text-base text-gray-500">
+            We&apos;ll get back to you as soon as possible. Can&apos;t wait? Call us directly.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">

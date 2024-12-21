@@ -66,14 +66,13 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
           >
-            Let's Build Something <span className="text-gradient">Amazing</span> Together
+            Let&apos;s Build Something <span className="text-gradient">Amazing</span> Together
           </motion.h1>
           <motion.p
             variants={itemVariants}
             className="mt-6 text-lg leading-8 text-gray-600"
           >
-            Whether you have a project in mind, a technical question, or just want to say hello,
-            we'd love to hear from you. Our team is ready to help turn your vision into reality.
+            Whether you have a project in mind or just want to say hello, we&apos;d love to hear from you.
           </motion.p>
           <motion.div
             variants={itemVariants}

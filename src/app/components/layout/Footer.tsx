@@ -68,30 +68,29 @@ export default function Footer() {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="container mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-12 xl:col-span-1">
-            <Link href="/" className="group block relative hover:opacity-100 transition-opacity">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-lg blur-md group-hover:blur-lg transition-all duration-500 opacity-0 group-hover:opacity-100" />
+      <div className="container mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
+        <div className="xl:grid xl:grid-cols-3 xl:gap-12">
+          <div className="space-y-16 xl:col-span-1">
+            <Link href="/" className="block relative">
               <motion.div
                 whileHover={{ 
-                  scale: 1.01,
+                  scale: 1.02,
                   transition: { duration: 0.3 }
                 }}
               >
                 <Image
                   src="/Images/Logo.png"
                   alt="McGinnis Technology Group"
-                  width={300}
-                  height={67}
-                  className="h-20 w-auto relative transition-transform duration-500"
+                  width={400}
+                  height={89}
+                  className="h-24 w-auto relative"
                 />
               </motion.div>
             </Link>
-            <p className="text-base text-gray-500">
+            <p className="text-lg text-gray-500">
               Elevating Your Digital Vision with Innovative Technology Solutions
             </p>
-            <div className="flex space-x-6">
+            <div className="flex space-x-8">
               {navigation.social.map((item) => (
                 <a
                   key={item.name}
@@ -99,21 +98,21 @@ export default function Footer() {
                   className="text-gray-400 hover:text-gray-500"
                 >
                   <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                  <item.icon className="h-7 w-7" aria-hidden="true" />
                 </a>
               ))}
             </div>
           </div>
-          <div className="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
+          <div className="mt-16 grid grid-cols-2 gap-12 xl:mt-0 xl:col-span-2">
+            <div className="md:grid md:grid-cols-2 md:gap-12">
               <div>
-                <h3 className="text-base font-semibold text-gray-900">Solutions</h3>
-                <ul className="mt-4 space-y-4">
+                <h3 className="text-xl font-semibold text-gray-900">Solutions</h3>
+                <ul className="mt-6 space-y-6">
                   {navigation.solutions.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-base text-gray-500 hover:text-gray-900"
+                        className="text-lg text-gray-500 hover:text-gray-900"
                       >
                         {item.name}
                       </Link>
@@ -122,13 +121,13 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-12 md:mt-0">
-                <h3 className="text-base font-semibold text-gray-900">Company</h3>
-                <ul className="mt-4 space-y-4">
+                <h3 className="text-xl font-semibold text-gray-900">Company</h3>
+                <ul className="mt-6 space-y-6">
                   {navigation.company.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-base text-gray-500 hover:text-gray-900"
+                        className="text-lg text-gray-500 hover:text-gray-900"
                       >
                         {item.name}
                       </Link>
@@ -139,8 +138,8 @@ export default function Footer() {
             </div>
             <div className="md:grid md:grid-cols-1 md:gap-8">
               <div>
-                <h3 className="text-base font-semibold text-gray-900">Subscribe to our newsletter</h3>
-                <p className="mt-4 text-base text-gray-500">
+                <h3 className="text-xl font-semibold text-gray-900">Subscribe to our newsletter</h3>
+                <p className="mt-6 text-lg text-gray-500">
                   Get the latest updates and insights delivered to your inbox.
                 </p>
                 <form className="mt-4 sm:flex sm:max-w-md" onSubmit={handleSubmit}>
@@ -171,8 +170,8 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-12 border-t border-gray-200 pt-8">
-          <p className="text-base text-gray-400 xl:text-center">
+        <div className="mt-16 border-t border-gray-200 pt-8">
+          <p className="text-lg text-gray-400 xl:text-center">
             &copy; {new Date().getFullYear()} McGinnis Technology Group. All rights reserved.
           </p>
         </div>

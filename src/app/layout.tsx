@@ -15,8 +15,8 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: "CodeSync Consulting | Custom Web Solutions",
-  description: "Elevating Your Digital Vision with Custom Web Solutions. From startups to enterprises, we craft websites that drive results.",
+  title: "McGinnis Technology Group | Custom Web Solutions",
+  description: "We create custom web solutions that help businesses thrive in the digital age. Our services include web development, UI/UX design, and digital transformation.",
 };
 
 export default function RootLayout({

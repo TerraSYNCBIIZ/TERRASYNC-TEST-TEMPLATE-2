@@ -92,9 +92,7 @@ export default function PlatformPage() {
               Visualize Your Perfect Website
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Our proprietary platform helps you explore and visualize your website before development begins. 
-              Experience an innovative approach to website planning that ensures your vision is perfectly 
-              captured and executed by our expert team.
+              We&apos;re excited to show you what&apos;s possible with our platform.
             </p>
           </motion.div>
 
@@ -103,7 +101,7 @@ export default function PlatformPage() {
             className="mx-auto mt-16 max-w-7xl px-6 lg:px-8"
           >
             <div className="mx-auto max-w-2xl lg:text-center">
-              <h2 className="text-base font-semibold leading-7 text-primary">The CodeSync Advantage</h2>
+              <h2 className="text-base font-semibold leading-7 text-primary">The McGinnis Technology Group Advantage</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 From Vision to Reality
               </p>

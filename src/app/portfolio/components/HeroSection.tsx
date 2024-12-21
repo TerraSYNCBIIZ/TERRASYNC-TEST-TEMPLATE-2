@@ -55,7 +55,7 @@ export default function HeroSection() {
             Our <span className="text-gradient">Portfolio</span> of Success Stories
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Explore our collection of successful projects where we've helped businesses transform their digital presence. 
+            Explore our collection of successful projects where we&apos;ve helped businesses transform their digital presence. 
             Each project represents our commitment to excellence and innovation.
           </p>
           <motion.div

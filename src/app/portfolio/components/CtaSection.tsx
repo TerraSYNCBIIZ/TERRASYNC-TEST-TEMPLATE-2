@@ -55,8 +55,8 @@ export default function CtaSection() {
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Ready to Start Your Project?
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Let's work together to create something amazing. Our team is ready to help you bring your vision to life.
+          <p className="mt-4 text-base text-gray-500">
+            Let&apos;s create your success story together.
           </p>
           <motion.div
             variants={itemVariants}

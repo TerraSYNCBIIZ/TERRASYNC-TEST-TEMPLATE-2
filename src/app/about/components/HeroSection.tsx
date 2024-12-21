@@ -19,7 +19,7 @@ export default function HeroSection() {
                 <span className="text-primary">2024</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                At McGinnis Technology Group, we're dedicated to transforming businesses through innovative technology solutions. Our team of experts combines years of experience with cutting-edge expertise to deliver exceptional results.
+                We&apos;re not just another web development company. We&apos;re your strategic partner in digital transformation.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <div className="flex items-center gap-2">
@@ -63,7 +63,7 @@ export default function HeroSection() {
                 >
                   <Image
                     src="/Images/collaboration.jpg"
-                    alt="Team collaboration at CodeSync Consulting"
+                    alt="Team collaboration at McGinnis Technology Group"
                     width={1920}
                     height={1080}
                     className="h-full w-full object-cover hover:scale-105 transition-transform duration-700"

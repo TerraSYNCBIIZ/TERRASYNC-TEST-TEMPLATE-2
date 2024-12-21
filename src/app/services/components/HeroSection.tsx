@@ -94,9 +94,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="mt-6 text-lg leading-8 text-gray-600"
           >
-            From custom web applications to e-commerce platforms, we deliver innovative solutions
-            that help businesses thrive in the digital age. Our services combine technical excellence
-            with creative design to create exceptional user experiences.
+            We&apos;re here to help you succeed in the digital age.
           </motion.p>
           <motion.div
             variants={itemVariants}

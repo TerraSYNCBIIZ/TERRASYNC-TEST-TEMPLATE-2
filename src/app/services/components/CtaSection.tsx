@@ -37,8 +37,8 @@ export default function CtaSection() {
           <h2 className="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Ready to Transform Your Digital Presence?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-center text-lg leading-8 text-gray-300">
-            Let's discuss how we can help you achieve your business goals with our custom web solutions.
+          <p className="mt-4 text-base text-gray-500">
+            Let&apos;s discuss how we can help you achieve your business goals.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
