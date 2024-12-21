@@ -7,8 +7,8 @@ import ProcessSection from './components/ProcessSection';
 import CtaSection from './components/CtaSection';
 
 export const metadata: Metadata = {
-  title: 'About Us | CodeSync Consulting',
-  description: 'Learn about our mission, values, and the talented team behind CodeSync Consulting. We are passionate about delivering exceptional web solutions.',
+  title: 'About Us | McGinnis Technology Group',
+  description: 'Learn about our mission, values, and the talented team behind McGinnis Technology Group. We are passionate about delivering exceptional web solutions.',
 };
 
 export default function AboutPage() {

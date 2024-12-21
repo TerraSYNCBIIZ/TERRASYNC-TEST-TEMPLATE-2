@@ -7,8 +7,8 @@ import FaqSection from './components/FaqSection';
 import OfficeInfo from './components/OfficeInfo';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | CodeSync Consulting',
-  description: 'Get in touch with our team for web development projects, technical consulting, or partnership opportunities. We\'re here to help bring your digital vision to life.',
+  title: 'Contact Us | McGinnis Technology Group',
+  description: 'Get in touch with us to discuss your project. We\'re here to help turn your vision into reality.',
 };
 
 export default function ContactPage() {

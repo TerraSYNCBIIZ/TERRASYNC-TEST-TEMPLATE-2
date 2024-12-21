@@ -7,8 +7,8 @@ import FaqSection from './components/FaqSection';
 import CtaSection from './components/CtaSection';
 
 export const metadata: Metadata = {
-  title: 'Services | CodeSync Consulting',
-  description: 'Explore our comprehensive web development services including custom development, UI/UX design, e-commerce solutions, and performance optimization.',
+  title: 'Services | McGinnis Technology Group',
+  description: 'Discover our comprehensive web development and digital transformation services.',
 };
 
 export default function ServicesPage() {

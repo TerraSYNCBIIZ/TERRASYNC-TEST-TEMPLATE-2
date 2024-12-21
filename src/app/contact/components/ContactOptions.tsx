@@ -12,7 +12,7 @@ const contactOptions = [
       </svg>
     ),
     contact: {
-      email: 'info@mcginnistechnologygroup.com',
+      email: 'info@mcginnistech.com',
       phone: '865-696-5987',
     },
     cta: {

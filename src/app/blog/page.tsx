@@ -7,8 +7,8 @@ import NewsletterSection from './components/NewsletterSection';
 import CtaSection from './components/CtaSection';
 
 export const metadata: Metadata = {
-  title: 'Blog | CodeSync Consulting',
-  description: 'Stay updated with the latest in web development, tech trends, and industry insights. Expert articles and tutorials from our development team.',
+  title: 'Blog | McGinnis Technology Group',
+  description: 'Stay up to date with the latest insights and trends in web development, design, and digital transformation.',
 };
 
 export default function BlogPage() {

@@ -7,8 +7,8 @@ import ProcessSection from './components/ProcessSection';
 import CtaSection from './components/CtaSection';
 
 export const metadata: Metadata = {
-  title: 'Portfolio | CodeSync Consulting',
-  description: 'Explore our diverse portfolio of web development projects. From e-commerce to enterprise solutions, see how we help businesses succeed online.',
+  title: 'Portfolio | McGinnis Technology Group',
+  description: 'Explore our collection of successful web development projects and digital solutions.',
 };
 
 export default function PortfolioPage() {
