@@ -124,10 +124,15 @@ export default function ConsultationForm() {
 
   const handleNext = useCallback(() => {
     if (currentStep < steps.length - 1 && validateStep(currentStep)) {
-      setCompletedSteps(prev => [...new Set([...prev, currentStep])]);
+      setCompletedSteps(prev => {
+        if (!prev.includes(currentStep)) {
+          return [...prev, currentStep];
+        }
+        return prev;
+      });
       setCurrentStep(prev => prev + 1);
     }
-  }, [currentStep, formData]);
+  }, [currentStep, validateStep]);
 
   const handleBack = useCallback(() => {
     if (currentStep > 0) {
