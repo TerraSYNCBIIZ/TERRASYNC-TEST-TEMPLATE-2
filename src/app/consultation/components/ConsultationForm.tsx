@@ -96,7 +96,7 @@ export default function ConsultationForm() {
       case 0: // Business Info
         return !!formData.businessName && !!formData.industry && !!formData.businessSize;
       case 1: // Project Details
-        return Array.isArray(formData.features) && formData.features.length > 0;
+        return Array.isArray(formData.features) && formData.features.length > 0 && !!formData.projectType;
       case 2: // Website Type
         console.log('Validating website type:', formData.websiteType);
         const isValid = !!formData.websiteType;

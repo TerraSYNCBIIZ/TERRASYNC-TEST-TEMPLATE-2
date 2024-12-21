@@ -298,9 +298,6 @@ export default function ProjectDetailsStep({ formData, onNext, onBack, updateFor
     if (formData.features.length === 0) {
       newErrors.features = 'Please select at least one feature';
     }
-    if (!formData.projectDescription?.trim()) {
-      newErrors.projectDescription = 'Please provide a project description';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -329,6 +326,47 @@ export default function ProjectDetailsStep({ formData, onNext, onBack, updateFor
       </div>
 
       <div className="space-y-12">
+        {/* Project Type Selection */}
+        <div>
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Project Type</h3>
+            <p className="text-sm text-gray-600">
+              Select the type of project you want to build
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { id: 'new_website', label: 'New Website', description: 'Build a new website from scratch' },
+              { id: 'redesign', label: 'Website Redesign', description: 'Redesign an existing website' },
+              { id: 'add_features', label: 'Add Features', description: 'Add new features to existing website' },
+              { id: 'maintenance', label: 'Maintenance', description: 'Ongoing maintenance and updates' }
+            ].map((type) => (
+              <button
+                key={type.id}
+                type="button"
+                onClick={() => handleInputChange('projectType', type.id)}
+                className={`
+                  relative p-4 rounded-xl text-left
+                  ${formData.projectType === type.id
+                    ? 'bg-primary/5 border-primary ring-1 ring-primary'
+                    : 'border border-gray-200 hover:border-primary/50'}
+                  transition-all duration-200
+                `}
+              >
+                <span className="text-sm font-medium text-gray-900">
+                  {type.label}
+                </span>
+                <span className="mt-1 text-xs text-gray-500 block">
+                  {type.description}
+                </span>
+              </button>
+            ))}
+          </div>
+          {errors.projectType && (
+            <p className="mt-2 text-sm text-red-600">{errors.projectType}</p>
+          )}
+        </div>
+
         {/* Standard Features */}
         <div>
           <div className="mb-6">
