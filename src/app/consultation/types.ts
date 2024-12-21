@@ -51,6 +51,14 @@ export interface FormData {
   features: string[];
   projectDescription?: string;
 
+  // Website Type
+  websiteType: string;
+  websiteTypeDetails?: string;
+
+  // Budget & Timeline
+  budget: string;
+  timeline: string;
+
   // Contact Info
   firstName: string;
   lastName: string;
@@ -59,17 +67,12 @@ export interface FormData {
   preferredContactMethod: string;
 
   // Schedule Call
-  preferredTime: string;
+  preferredDate?: string;
+  preferredTime?: string;
+  timezone?: string;
   additionalNotes?: string;
 
-  websiteType: string;
-  websiteTypeDetails?: string;
-
-  // Budget & Timeline
-  budget: string;
-  timeline: string;
-
-  // Schedule Call
+  // Success tracking
   meetingId?: string;
   schedulingComplete?: boolean;
 } 

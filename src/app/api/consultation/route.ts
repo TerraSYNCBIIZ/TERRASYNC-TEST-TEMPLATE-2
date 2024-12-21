@@ -3,90 +3,73 @@ import type { FormData } from '@/app/consultation/types';
 
 export async function POST(request: Request) {
   try {
-    // Log the raw request body for debugging
-    const rawBody = await request.text();
-    console.log('Raw request body:', rawBody);
+    const formData: FormData = await request.json();
 
-    // Parse the JSON manually to handle parsing errors
-    let formData: FormData;
-    try {
-      formData = JSON.parse(rawBody);
-    } catch (parseError) {
-      console.error('JSON parsing error:', parseError);
-      return NextResponse.json(
-        { error: 'Invalid JSON format in request body' },
-        { status: 400 }
-      );
-    }
+    // Create email content
+    const emailContent = {
+      to: process.env.NOTIFICATION_EMAIL,
+      subject: 'New Consultation Request',
+      html: `
+        <h2>New Consultation Request</h2>
+        <h3>Contact Information</h3>
+        <p>Name: ${formData.firstName} ${formData.lastName}</p>
+        <p>Email: ${formData.email}</p>
+        <p>Phone: ${formData.phone}</p>
+        <p>Preferred Contact: ${formData.preferredContactMethod}</p>
 
-    // Log the parsed data
-    console.log('Parsed form data:', formData);
+        <h3>Business Information</h3>
+        <p>Business Name: ${formData.businessName}</p>
+        <p>Industry: ${formData.industry}</p>
+        <p>Business Size: ${formData.businessSize}</p>
+        <p>Current Website: ${formData.currentWebsite || 'N/A'}</p>
 
-    // Validate all required fields
-    const requiredFields = [
-      'firstName',
-      'lastName',
-      'email',
-      'preferredDate',
-      'preferredTime',
-      'timezone'
-    ] as const;
+        <h3>Project Details</h3>
+        <p>Website Type: ${formData.websiteType}</p>
+        <p>Features: ${formData.features.join(', ')}</p>
+        <p>Budget: ${formData.budget}</p>
+        <p>Timeline: ${formData.timeline}</p>
 
-    const missingFields = requiredFields.filter(
-      field => !formData[field as keyof FormData]
-    );
-    
-    if (missingFields.length > 0) {
-      console.error('Missing required fields:', missingFields);
-      return NextResponse.json(
-        { 
-          error: 'Missing required fields',
-          missingFields 
-        },
-        { status: 400 }
-      );
-    }
+        <h3>Schedule Details</h3>
+        <p>Preferred Date: ${formData.preferredDate || 'Not specified'}</p>
+        <p>Preferred Time: ${formData.preferredTime || 'Not specified'}</p>
+        <p>Timezone: ${formData.timezone || 'Not specified'}</p>
+        <p>Additional Notes: ${formData.additionalNotes || 'None'}</p>
+      `
+    };
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      return NextResponse.json(
-        { error: 'Invalid email format' },
-        { status: 400 }
-      );
-    }
+    // Calendar event details (if needed)
+    const calendarEvent = {
+      summary: 'Website Consultation Call',
+      description: `Consultation call with ${formData.businessName}`,
+      attendees: [
+        {
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          scheduledDate: formData.preferredDate || 'TBD',
+          scheduledTime: formData.preferredTime || 'TBD',
+          timezone: formData.timezone || 'UTC'
+        }
+      ]
+    };
 
-    // Here you would typically:
-    // 1. Save to database
-    // 2. Send confirmation emails
-    // 3. Set up calendar invites
-    // For now, we'll just log and return success
+    // TODO: Add actual email sending and calendar integration
+    console.log('Email Content:', emailContent);
+    console.log('Calendar Event:', calendarEvent);
 
-    console.log('Processing consultation request for:', formData.email);
-
-    // Send success response
-    return NextResponse.json({
-      message: 'Consultation request received successfully',
-      data: {
-        name: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
-        scheduledDate: formData.preferredDate,
-        scheduledTime: formData.preferredTime,
-        timezone: formData.timezone
-      }
+    return new Response(JSON.stringify({ success: true }), {
+      headers: { 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
-    // Log the full error
-    console.error('Error processing consultation request:', error);
-    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
-    
-    return NextResponse.json(
+    console.error('Consultation submission error:', error);
+    return new Response(
+      JSON.stringify({ 
+        success: false, 
+        error: 'Failed to process consultation request' 
+      }),
       { 
-        error: 'Failed to process consultation request',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500 }
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
     );
   }
 } 
