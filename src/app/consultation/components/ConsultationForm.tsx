@@ -29,14 +29,14 @@ const initialFormData: FormData = {
   businessSize: '',
   currentWebsite: '',
   
-  // Website Type
-  websiteType: '',
-  otherDetails: '',
-  
   // Project Details
   projectType: '',
   features: [],
   projectDescription: '',
+  
+  // Website Type
+  websiteType: '',
+  websiteTypeDetails: '',
   
   // Budget & Timeline
   budget: '',
@@ -47,15 +47,12 @@ const initialFormData: FormData = {
   lastName: '',
   email: '',
   phone: '',
-  companyRole: '',
   preferredContactMethod: '',
   
   // Schedule Call
   preferredDate: '',
   preferredTime: '',
-  alternateDate: '',
-  alternateTime: '',
-  timezone: 'ET',
+  timezone: '',
   additionalNotes: ''
 };
 
