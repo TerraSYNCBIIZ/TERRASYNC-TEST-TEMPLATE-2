@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import ConsultationForm, { FormData } from './components/ConsultationForm';
+import { FormData } from './types';
+import ConsultationForm from './components/ConsultationForm';
 import BusinessInfoStep from './components/steps/BusinessInfoStep';
 import ProjectDetailsStep from './components/steps/ProjectDetailsStep';
 import WebsiteTypeStep from './components/steps/WebsiteTypeStep';
