@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { FormData } from '../../types';
 import { formStyles } from '../styles';
 import { useState } from 'react';
-import { PROJECT_TYPES } from '../../constants.tsx';
 
 interface ProjectDetailsStepProps {
   formData: FormData;
