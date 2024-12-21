@@ -1,30 +1,34 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useDeepgram } from '../lib/contexts/DeepgramContext';
-import { addDocument } from '../lib/firebase/firebaseUtils';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function VoiceRecorder() {
   const [isRecording, setIsRecording] = useState(false);
-  const { connectToDeepgram, disconnectFromDeepgram, connectionState, realtimeTranscript } = useDeepgram();
+  const [transcript, setTranscript] = useState('');
 
   const handleStartRecording = async () => {
-    await connectToDeepgram();
-    setIsRecording(true);
+    try {
+      const recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onresult = (event) => {
+        const current = event.resultIndex;
+        const result = event.results[current];
+        const transcriptText = result[0].transcript;
+        setTranscript(transcriptText);
+      };
+
+      recognition.start();
+      setIsRecording(true);
+    } catch (error) {
+      console.error('Error starting recording:', error);
+    }
   };
 
-  const handleStopRecording = async () => {
-    disconnectFromDeepgram();
+  const handleStopRecording = () => {
     setIsRecording(false);
-    
-    // Save the note to Firebase
-    if (realtimeTranscript) {
-      await addDocument('notes', {
-        text: realtimeTranscript,
-        timestamp: new Date().toISOString(),
-      });
-    }
   };
 
   return (
@@ -50,7 +54,7 @@ export default function VoiceRecorder() {
             }}
             className="w-8 h-8 bg-blue-500 rounded-full mx-auto mb-4"
           />
-          <p className="text-sm text-gray-600">{realtimeTranscript}</p>
+          <p className="text-sm text-gray-600">{transcript}</p>
         </div>
       )}
     </div>
