@@ -84,9 +84,9 @@ export default function Footer() {
                   <Image
                     src="/Images/Logo.png"
                     alt="McGinnis Technology Group"
-                    width={400}
-                    height={89}
-                    className="h-24 w-auto relative transition-transform duration-500"
+                    width={600}
+                    height={133}
+                    className="h-32 w-auto relative transition-transform duration-500"
                   />
                 </motion.div>
               </Link>
