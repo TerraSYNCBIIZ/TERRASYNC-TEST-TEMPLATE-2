@@ -289,16 +289,25 @@ export default function ProjectDetailsStep({ formData, onNext, onBack, updateFor
     setErrors({});
   };
 
-  const handleSubmit = () => {
+  const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!formData.features || formData.features.length === 0) {
+    
+    if (!formData.projectType) {
+      newErrors.projectType = 'Please select a project type';
+    }
+    if (formData.features.length === 0) {
       newErrors.features = 'Please select at least one feature';
+    }
+    if (!formData.projectDescription?.trim()) {
+      newErrors.projectDescription = 'Please provide a project description';
     }
 
     setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    if (Object.keys(newErrors).length === 0) {
+  const handleSubmit = () => {
+    if (validateForm()) {
       onNext();
     }
   };

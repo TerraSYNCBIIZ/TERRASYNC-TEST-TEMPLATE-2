@@ -15,13 +15,12 @@ export default function ConsultationPage() {
     
     // Website Type
     websiteType: '',
-    otherDetails: '',
+    websiteTypeDetails: '',
     
     // Project Details
-    projectGoals: [],
-    targetAudience: '',
-    keyFeatures: [],
-    competitors: '',
+    projectType: '',
+    features: [],
+    projectDescription: '',
     
     // Budget & Timeline
     budget: '',
@@ -32,14 +31,13 @@ export default function ConsultationPage() {
     lastName: '',
     email: '',
     phone: '',
+    preferredContactMethod: '',
     companyRole: '',
     
     // Schedule Call
     preferredDate: '',
     preferredTime: '',
-    alternateDate: '',
-    alternateTime: '',
-    timezone: 'ET',
+    timezone: '',
     additionalNotes: ''
   });
 
