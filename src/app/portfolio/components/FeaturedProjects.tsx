@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import ComingSoonOverlay from '@/app/components/shared/ComingSoonOverlay';
 
 const featuredProjects = [
   {
@@ -65,7 +66,7 @@ export default function FeaturedProjects() {
   };
 
   return (
-    <section id="featured-projects" className="py-24 sm:py-32 bg-gray-50">
+    <section className="relative py-24 sm:py-32 bg-white overflow-hidden">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -82,72 +83,42 @@ export default function FeaturedProjects() {
           </p>
         </motion.div>
 
-        <div className="mt-16 relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentProject}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5 }}
-              className="overflow-hidden rounded-2xl bg-white shadow-xl"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div className="relative h-64 lg:h-full">
-                  <Image
-                    src={featuredProjects[currentProject].image}
-                    alt={featuredProjects[currentProject].title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-8 lg:p-12">
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    {featuredProjects[currentProject].title}
-                  </h3>
-                  <p className="mt-4 text-lg text-gray-600">
-                    {featuredProjects[currentProject].description}
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {featuredProjects[currentProject].tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="mt-8">
-                    <Link
-                      href={featuredProjects[currentProject].link}
-                      className="btn-primary"
-                    >
-                      View Case Study
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation buttons */}
-          <button
-            onClick={prevProject}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
-          >
-            <svg className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-          </button>
-          <button
-            onClick={nextProject}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
-          >
-            <svg className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-          </button>
+        <div className="relative mt-16">
+          <ComingSoonOverlay 
+            message="Featured Projects Coming Soon" 
+            subMessage="We're preparing to showcase our best work. Stay tuned!" 
+          />
+          
+          <motion.div variants={itemVariants} className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {/* Project placeholders that will be visible behind the overlay */}
+            <div className="bg-gray-50 rounded-2xl p-6 h-[400px] flex items-center justify-center">
+              <Image
+                src="/Images/project-placeholder-1.jpg"
+                alt="Project placeholder"
+                width={400}
+                height={300}
+                className="rounded-xl"
+              />
+            </div>
+            <div className="bg-gray-50 rounded-2xl p-6 h-[400px] flex items-center justify-center">
+              <Image
+                src="/Images/project-placeholder-2.jpg"
+                alt="Project placeholder"
+                width={400}
+                height={300}
+                className="rounded-xl"
+              />
+            </div>
+            <div className="bg-gray-50 rounded-2xl p-6 h-[400px] flex items-center justify-center">
+              <Image
+                src="/Images/project-placeholder-3.jpg"
+                alt="Project placeholder"
+                width={400}
+                height={300}
+                className="rounded-xl"
+              />
+            </div>
+          </motion.div>
         </div>
       </motion.div>
     </section>
