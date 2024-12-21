@@ -5,44 +5,48 @@ import SectionHeading from '../shared/SectionHeading';
 
 const features = [
   {
-    name: '24/7 Support',
-    description: 'Round-the-clock technical support to ensure your website runs smoothly at all times.',
+    name: 'Rapid Delivery',
+    description: 'We deliver complete projects in days, not months. Our streamlined process and expert team ensure quick turnaround without compromising quality.',
     icon: (
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
     gradient: 'from-blue-500 to-cyan-400',
+    metrics: ['Fast Delivery', 'Full Projects', 'No Compromises'],
   },
   {
-    name: 'Agile Development',
-    description: 'Flexible and iterative development process that adapts to your changing needs.',
+    name: 'Dedicated Support',
+    description: 'Our team is always here for you. Get 24/7 support and rapid response times to keep your project moving forward.',
     icon: (
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
       </svg>
     ),
     gradient: 'from-purple-500 to-pink-400',
+    metrics: ['24/7 Support', '1hr Response', 'Expert Team'],
   },
   {
-    name: 'ROI-Focused',
-    description: 'Solutions designed to maximize your return on investment and drive business growth.',
+    name: 'Quality Focus',
+    description: 'Our efficient approach ensures high-quality results through rigorous testing and attention to detail.',
     icon: (
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
       </svg>
     ),
     gradient: 'from-green-500 to-emerald-400',
+    metrics: ['Code Reviews', 'Testing', 'Best Practices'],
   },
   {
-    name: '10+ Years Experience',
-    description: 'A decade of expertise in delivering successful web solutions across industries.',
+    name: 'Agile Process',
+    description: 'Our streamlined development process ensures quick iterations and constant progress, keeping you in the loop every step of the way.',
     icon: (
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
       </svg>
     ),
     gradient: 'from-orange-500 to-amber-400',
+    metrics: ['Daily Updates', 'Quick Iterations', 'Full Transparency'],
   },
 ];
 
@@ -67,16 +71,37 @@ const itemVariants = {
   },
 };
 
+const metricVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
 export default function WhyChooseUsSection() {
   return (
     <section className="py-24 sm:py-32 bg-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <SectionHeading
-            title="Why Choose Us"
-            subtitle="We combine technical excellence with creative innovation to deliver exceptional results for our clients."
-            centered
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="text-base font-semibold leading-7 text-primary">Why Choose Us</p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Speed meets excellence in web development
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              Unlike others in the industry, we deliver complete projects in days, not months. 
+              Our streamlined process and expert team ensure rapid delivery without compromising quality.
+            </p>
+          </motion.div>
         </div>
         
         <motion.div
@@ -98,7 +123,13 @@ export default function WhyChooseUsSection() {
                   
                   <div className="relative">
                     <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
-                      <div className="text-primary">{feature.icon}</div>
+                      <motion.div 
+                        className="text-primary"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {feature.icon}
+                      </motion.div>
                     </div>
                     
                     <dt className="mt-6 text-xl font-semibold leading-7 text-gray-900">
@@ -108,6 +139,21 @@ export default function WhyChooseUsSection() {
                     <dd className="mt-4 text-base leading-7 text-gray-600">
                       {feature.description}
                     </dd>
+
+                    <motion.div
+                      variants={containerVariants}
+                      className="mt-6 flex flex-wrap gap-2"
+                    >
+                      {feature.metrics.map((metric, index) => (
+                        <motion.span
+                          key={metric}
+                          variants={metricVariants}
+                          className="inline-flex items-center rounded-full bg-primary/5 px-3 py-1 text-sm font-medium text-primary"
+                        >
+                          {metric}
+                        </motion.span>
+                      ))}
+                    </motion.div>
                   </div>
                 </div>
               </motion.div>

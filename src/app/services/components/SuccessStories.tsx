@@ -30,36 +30,36 @@ const successStories = [
     title: 'Custom E-commerce Platform',
     category: 'Case Study',
     industry: 'Fashion Retailer',
-    description: 'Developed a custom e-commerce platform that increased sales by 150% and improved customer satisfaction.',
+    description: 'A modern e-commerce platform with real-time inventory management and AI-powered recommendations.',
     image: '/Images/success-stories/ecommerce.jpg',
     metrics: [
-      { value: '150%', label: 'Sales Increase' },
-      { value: '-35%', label: 'Cart Abandonment' },
-      { value: '4.8/5', label: 'Customer Rating' }
+      { value: 'Real-time', label: 'Inventory' },
+      { value: 'Smart', label: 'Analytics' },
+      { value: 'AI', label: 'Powered' }
     ]
   },
   {
     title: 'SaaS Analytics Dashboard',
     category: 'Case Study',
     industry: 'Tech Startup',
-    description: 'Built a real-time analytics dashboard that helped the client make data-driven decisions and optimize operations.',
+    description: 'An intuitive dashboard for data-driven decisions and optimized operations.',
     image: '/Images/success-stories/dashboard.jpg',
     metrics: [
-      { value: '-60%', label: 'Processing Time' },
-      { value: '+85%', label: 'User Engagement' },
-      { value: '-40%', label: 'Support Tickets' }
+      { value: 'Fast', label: 'Processing' },
+      { value: 'Rich', label: 'Features' },
+      { value: 'Smart', label: 'Insights' }
     ]
   },
   {
     title: 'Mobile Marketplace App',
     category: 'Case Study',
     industry: 'Service Provider',
-    description: 'Created a marketplace app that connected service providers with customers, resulting in rapid business growth.',
+    description: 'A marketplace app connecting service providers with customers, featuring real-time matching.',
     image: '/Images/success-stories/marketplace.jpg',
     metrics: [
-      { value: '200%', label: 'User Growth' },
-      { value: '+175%', label: 'Transaction Volume' },
-      { value: '+125%', label: 'Provider Revenue' }
+      { value: 'Real-time', label: 'Matching' },
+      { value: 'Smart', label: 'Routing' },
+      { value: 'Secure', label: 'Payments' }
     ]
   }
 ];

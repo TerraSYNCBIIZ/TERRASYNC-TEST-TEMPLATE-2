@@ -28,7 +28,7 @@ export default function HeroSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                   </div>
-                  <span className="font-semibold">500+ Projects Delivered</span>
+                  <span className="font-semibold">Rapid Development</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="rounded-full bg-primary/10 p-2">
@@ -36,7 +36,7 @@ export default function HeroSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                   </div>
-                  <span className="font-semibold">200+ Happy Clients</span>
+                  <span className="font-semibold">24/7 Support</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="rounded-full bg-primary/10 p-2">
@@ -44,7 +44,7 @@ export default function HeroSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                   </div>
-                  <span className="font-semibold">10+ Years Experience</span>
+                  <span className="font-semibold">Modern Tech Stack</span>
                 </div>
               </div>
             </motion.div>

@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import SectionHeading from '@/app/components/shared/SectionHeading';
+import { useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const services = [
   {
@@ -20,6 +22,8 @@ const services = [
       </svg>
     ),
     href: '#custom-development',
+    gradient: 'from-blue-500/20 to-cyan-500/20',
+    pattern: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234338ca' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
   },
   {
     name: 'UI/UX Design',
@@ -36,6 +40,8 @@ const services = [
       </svg>
     ),
     href: '#ui-ux-design',
+    gradient: 'from-purple-500/20 to-pink-500/20',
+    pattern: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a21caf' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
   },
   {
     name: 'E-Commerce Solutions',
@@ -52,6 +58,8 @@ const services = [
       </svg>
     ),
     href: '#ecommerce',
+    gradient: 'from-emerald-500/20 to-green-500/20',
+    pattern: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
   },
   {
     name: 'Performance Optimization',
@@ -68,7 +76,9 @@ const services = [
       </svg>
     ),
     href: '#optimization',
-  },
+    gradient: 'from-amber-500/20 to-orange-500/20',
+    pattern: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f97316' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+  }
 ];
 
 const containerVariants = {
@@ -76,7 +86,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.2,
     },
   },
 };
@@ -92,9 +102,30 @@ const itemVariants = {
   },
 };
 
+const featureVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
 export default function ServicesOverview() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
   return (
-    <section id="services-overview" className="py-24 sm:py-32">
+    <section id="services-overview" className="relative py-24 sm:py-32 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[800px] h-full">
+          <div className="absolute top-1/2 -translate-y-1/2 aspect-square w-full rounded-full bg-gradient-to-tr from-primary/30 to-secondary/30 blur-3xl opacity-20" />
+        </div>
+      </div>
+
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <SectionHeading
           title="Our Services"
@@ -103,48 +134,87 @@ export default function ServicesOverview() {
         />
         
         <motion.div
+          ref={ref}
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate={isInView ? "visible" : "hidden"}
           className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none"
         >
-          <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2 lg:gap-y-24">
-            {services.map((service) => (
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+            {services.map((service, index) => (
               <motion.div
                 key={service.name}
                 variants={itemVariants}
+                whileHover={{ scale: 1.02 }}
                 className="relative flex flex-col"
               >
-                <div className="rounded-2xl border border-gray-200 bg-white p-8 ring-1 ring-gray-200 hover:ring-primary/50 transition-all duration-300">
-                  <div className="flex items-center gap-x-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                      <div className="text-primary">{service.icon}</div>
+                <div 
+                  className="relative h-full rounded-2xl bg-white p-8 shadow-lg ring-1 ring-gray-200/50 transition-all duration-300 hover:shadow-xl overflow-hidden group"
+                  style={{ backgroundImage: service.pattern }}
+                >
+                  {/* Gradient overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                  <div className="relative">
+                    <div className="flex items-center gap-x-4">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
+                        <motion.div 
+                          className="text-primary"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          {service.icon}
+                        </motion.div>
+                      </div>
+                      <h3 className="text-xl font-semibold leading-8 text-gray-900 group-hover:text-primary transition-colors duration-300">
+                        {service.name}
+                      </h3>
                     </div>
-                    <h3 className="text-lg font-semibold leading-8 text-gray-900">
-                      {service.name}
-                    </h3>
-                  </div>
-                  <p className="mt-4 text-base leading-7 text-gray-600">
-                    {service.description}
-                  </p>
-                  <ul className="mt-6 space-y-3 text-sm leading-6 text-gray-600">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex gap-x-3">
-                        <svg className="h-6 w-5 flex-none text-primary" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-8">
-                    <Link
-                      href={service.href}
-                      className="text-sm font-semibold leading-6 text-primary hover:text-primary/80"
+
+                    <p className="mt-6 text-base leading-7 text-gray-600">
+                      {service.description}
+                    </p>
+
+                    <motion.ul 
+                      variants={containerVariants}
+                      initial="hidden"
+                      animate={isInView ? "visible" : "hidden"}
+                      className="mt-8 space-y-4 text-sm leading-6 text-gray-600"
                     >
-                      Learn more <span aria-hidden="true">→</span>
-                    </Link>
+                      {service.features.map((feature) => (
+                        <motion.li 
+                          key={feature} 
+                          variants={featureVariants}
+                          className="flex gap-x-3 items-center"
+                        >
+                          <div className="flex-shrink-0 w-5 h-5">
+                            <svg className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          {feature}
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+
+                    <div className="mt-8">
+                      <Link
+                        href={service.href}
+                        className="inline-flex items-center gap-2 text-sm font-semibold leading-6 text-primary hover:text-primary/80 transition-colors duration-300"
+                      >
+                        Learn more 
+                        <motion.span
+                          animate={{ x: [0, 4, 0] }}
+                          transition={{ 
+                            duration: 1.5, 
+                            repeat: Infinity,
+                            ease: "easeInOut" 
+                          }}
+                        >
+                          →
+                        </motion.span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </motion.div>
