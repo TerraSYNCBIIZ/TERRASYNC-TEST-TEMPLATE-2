@@ -11,43 +11,7 @@ import ContactInfoStep from './steps/ContactInfoStep';
 import ScheduleCallStep from './steps/ScheduleCallStep';
 import ProgressBar from './ProgressBar';
 import { useLoading } from '@/app/components/providers/LoadingProvider';
-
-export type FormData = {
-  // Business Info
-  businessName: string;
-  industry: string;
-  businessSize: string;
-  currentWebsite: string;
-  
-  // Website Type
-  websiteType: string;
-  otherDetails?: string;
-  
-  // Project Details
-  projectGoals: string[];
-  targetAudience: string;
-  keyFeatures: string[];
-  competitors: string;
-  
-  // Budget & Timeline
-  budget: string;
-  timeline: string;
-  
-  // Contact Info
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  companyRole: string;
-  
-  // Schedule Call
-  preferredDate: string;
-  preferredTime: string;
-  alternateDate: string;
-  alternateTime: string;
-  timezone: string;
-  additionalNotes?: string;
-};
+import type { FormData } from '../types';
 
 const steps = [
   'Business Information',
@@ -85,6 +49,7 @@ const initialFormData: FormData = {
   email: '',
   phone: '',
   companyRole: '',
+  preferredContactMethod: '',
   
   // Schedule Call
   preferredDate: '',
