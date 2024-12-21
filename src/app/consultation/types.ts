@@ -39,40 +39,37 @@ export interface ScheduleCallData {
   additionalNotes?: string;
 }
 
-export type FormData = {
+export interface FormData {
   // Business Info
   businessName: string;
   industry: string;
   businessSize: string;
   currentWebsite: string;
-  
-  // Website Type
-  websiteType: string;
-  otherDetails?: string;
-  
+
   // Project Details
-  projectGoals: string[];
-  targetAudience: string;
-  keyFeatures: string[];
-  competitors: string;
-  
-  // Budget & Timeline
-  budget: string;
-  timeline: string;
-  
+  projectType: string;
+  features: string[];
+  projectDescription?: string;
+
   // Contact Info
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-  companyRole: string;
   preferredContactMethod: string;
-  
+
   // Schedule Call
-  preferredDate: string;
   preferredTime: string;
-  alternateDate: string;
-  alternateTime: string;
-  timezone: string;
   additionalNotes?: string;
-}; 
+
+  websiteType: string;
+  websiteTypeDetails?: string;
+
+  // Budget & Timeline
+  budget: string;
+  timeline: string;
+
+  // Schedule Call
+  meetingId?: string;
+  schedulingComplete?: boolean;
+} 

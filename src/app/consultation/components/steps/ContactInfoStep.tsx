@@ -18,37 +18,28 @@ export default function ContactInfoStep({
   updateFormData
 }: ContactInfoStepProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [localData, setLocalData] = useState({
-    firstName: formData.firstName || '',
-    lastName: formData.lastName || '',
-    email: formData.email || '',
-    phone: formData.phone || '',
-    companyRole: formData.companyRole || '',
-    preferredContactMethod: formData.preferredContactMethod || '',
-    timezone: formData.timezone || ''
-  });
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
     
-    if (!localData.firstName.trim()) {
+    if (!formData.firstName.trim()) {
       newErrors.firstName = 'First name is required';
     }
-    if (!localData.lastName.trim()) {
+    if (!formData.lastName.trim()) {
       newErrors.lastName = 'Last name is required';
     }
-    if (!localData.email.trim()) {
+    if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(localData.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    if (!localData.phone.trim()) {
+    if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
     }
-    if (!localData.preferredContactMethod) {
+    if (!formData.preferredContactMethod) {
       newErrors.preferredContactMethod = 'Please select a preferred contact method';
     }
-    if (!localData.timezone) {
+    if (!formData.timezone) {
       newErrors.timezone = 'Please select your timezone';
     }
 
@@ -58,17 +49,12 @@ export default function ContactInfoStep({
 
   const handleSubmit = () => {
     if (validateForm()) {
-      updateFormData(localData);
       onNext();
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
-    setLocalData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-    // Clear error when user starts typing
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    updateFormData({ [field]: value });
     if (errors[field]) {
       setErrors(prev => ({
         ...prev,
@@ -113,7 +99,7 @@ export default function ContactInfoStep({
           </label>
           <input
             type="text"
-            value={localData.firstName}
+            value={formData.firstName}
             onChange={(e) => handleInputChange('firstName', e.target.value)}
             className={`mt-1 block w-full rounded-md shadow-sm ${
               errors.firstName ? 'border-red-300' : 'border-gray-300'
@@ -130,7 +116,7 @@ export default function ContactInfoStep({
           </label>
           <input
             type="text"
-            value={localData.lastName}
+            value={formData.lastName}
             onChange={(e) => handleInputChange('lastName', e.target.value)}
             className={`mt-1 block w-full rounded-md shadow-sm ${
               errors.lastName ? 'border-red-300' : 'border-gray-300'
@@ -147,7 +133,7 @@ export default function ContactInfoStep({
           </label>
           <input
             type="email"
-            value={localData.email}
+            value={formData.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
             className={`mt-1 block w-full rounded-md shadow-sm ${
               errors.email ? 'border-red-300' : 'border-gray-300'
@@ -164,7 +150,7 @@ export default function ContactInfoStep({
           </label>
           <input
             type="tel"
-            value={localData.phone}
+            value={formData.phone}
             onChange={(e) => handleInputChange('phone', e.target.value)}
             className={`mt-1 block w-full rounded-md shadow-sm ${
               errors.phone ? 'border-red-300' : 'border-gray-300'
@@ -181,7 +167,7 @@ export default function ContactInfoStep({
           </label>
           <input
             type="text"
-            value={localData.companyRole}
+            value={formData.companyRole}
             onChange={(e) => handleInputChange('companyRole', e.target.value)}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
           />
@@ -192,7 +178,7 @@ export default function ContactInfoStep({
             Preferred Contact Method
           </label>
           <select
-            value={localData.preferredContactMethod}
+            value={formData.preferredContactMethod}
             onChange={(e) => handleInputChange('preferredContactMethod', e.target.value)}
             className={`mt-1 block w-full rounded-md shadow-sm ${
               errors.preferredContactMethod ? 'border-red-300' : 'border-gray-300'
@@ -215,7 +201,7 @@ export default function ContactInfoStep({
             Your Timezone
           </label>
           <select
-            value={localData.timezone}
+            value={formData.timezone}
             onChange={(e) => handleInputChange('timezone', e.target.value)}
             className={`mt-1 block w-full rounded-md shadow-sm ${
               errors.timezone ? 'border-red-300' : 'border-gray-300'

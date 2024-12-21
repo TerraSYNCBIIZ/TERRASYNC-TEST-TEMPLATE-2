@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import BusinessInfoStep from './steps/BusinessInfoStep';
@@ -34,10 +34,9 @@ const initialFormData: FormData = {
   otherDetails: '',
   
   // Project Details
-  projectGoals: [],
-  targetAudience: '',
-  keyFeatures: [],
-  competitors: '',
+  projectType: '',
+  features: [],
+  projectDescription: '',
   
   // Budget & Timeline
   budget: '',
@@ -60,6 +59,14 @@ const initialFormData: FormData = {
   additionalNotes: ''
 };
 
+// Add proper typing for common props
+interface StepProps {
+  formData: FormData;
+  onNext: () => void;
+  onBack: () => void;
+  updateFormData: (data: Partial<FormData>) => void;
+}
+
 export default function ConsultationForm() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
@@ -68,6 +75,15 @@ export default function ConsultationForm() {
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const { showLoading, hideLoading } = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [currentStep]);
 
   const handleUpdateFormData = useCallback((newData: Partial<FormData>) => {
     console.log('Updating form data:', newData);
@@ -77,11 +93,44 @@ export default function ConsultationForm() {
     }));
   }, []);
 
+  const validateStep = useCallback((step: number): boolean => {
+    switch (step) {
+      case 0: // Business Info
+        return !!formData.businessName && !!formData.industry && !!formData.businessSize;
+      case 1: // Project Details
+        return Array.isArray(formData.features) && formData.features.length > 0;
+      case 2: // Website Type
+        console.log('Validating website type:', formData.websiteType);
+        const isValid = !!formData.websiteType;
+        console.log('Is valid:', isValid);
+        return isValid;
+      case 3: // Budget & Timeline
+        return !!formData.budget && !!formData.timeline;
+      case 4: // Contact Info
+        return (
+          !!formData.firstName &&
+          !!formData.lastName &&
+          !!formData.email &&
+          !!formData.phone &&
+          !!formData.preferredContactMethod
+        );
+      case 5: // Schedule Call
+        return (
+          !!formData.preferredDate &&
+          !!formData.preferredTime &&
+          !!formData.timezone
+        );
+      default:
+        return false;
+    }
+  }, [formData]);
+
   const handleNext = useCallback(() => {
-    if (currentStep < steps.length - 1) {
+    if (currentStep < steps.length - 1 && validateStep(currentStep)) {
+      setCompletedSteps(prev => [...new Set([...prev, currentStep])]);
       setCurrentStep(prev => prev + 1);
     }
-  }, [currentStep]);
+  }, [currentStep, formData]);
 
   const handleBack = useCallback(() => {
     if (currentStep > 0) {
@@ -89,12 +138,15 @@ export default function ConsultationForm() {
     }
   }, [currentStep]);
 
+  const isStepValid = useCallback((step: number) => {
+    return completedSteps.includes(step);
+  }, [completedSteps]);
+
   const handleSubmit = async () => {
     setError(null);
     showLoading();
+    setIsLoading(true);
     try {
-      console.log('Submitting form data:', formData);
-      
       const response = await fetch('/api/consultation', {
         method: 'POST',
         headers: {
@@ -103,33 +155,16 @@ export default function ConsultationForm() {
         body: JSON.stringify(formData),
       });
 
-      // Log the raw response for debugging
-      const rawResponse = await response.text();
-      console.log('Raw response:', rawResponse);
-
-      // Try to parse the response as JSON
-      let data;
-      try {
-        data = JSON.parse(rawResponse);
-      } catch (parseError) {
-        console.error('Error parsing response:', parseError);
-        throw new Error('Invalid response from server');
-      }
-
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit consultation form');
+        throw new Error('Failed to submit consultation request');
       }
 
       setIsSuccess(true);
-      // Reset form
-      setFormData(initialFormData);
-      setCurrentStep(0);
-
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setError(error instanceof Error ? error.message : 'Failed to submit consultation form');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       hideLoading();
+      setIsLoading(false);
     }
   };
 
@@ -143,42 +178,21 @@ export default function ConsultationForm() {
 
     switch (currentStep) {
       case 0:
-        return (
-          <BusinessInfoStep
-            {...commonProps}
-          />
-        );
+        return <BusinessInfoStep {...commonProps} />;
       case 1:
-        return (
-          <ProjectDetailsStep
-            {...commonProps}
-          />
-        );
+        return <ProjectDetailsStep {...commonProps} />;
       case 2:
-        return (
-          <WebsiteTypeStep
-            {...commonProps}
-          />
-        );
+        return <WebsiteTypeStep {...commonProps} />;
       case 3:
-        return (
-          <BudgetTimelineStep
-            {...commonProps}
-          />
-        );
+        return <BudgetTimelineStep {...commonProps} />;
       case 4:
-        return (
-          <ContactInfoStep
-            {...commonProps}
-          />
-        );
+        return <ContactInfoStep {...commonProps} />;
       case 5:
         return (
           <ScheduleCallStep
             formData={formData}
             onBack={handleBack}
-            onSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
+            updateFormData={handleUpdateFormData}
           />
         );
       default:

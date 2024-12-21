@@ -2,81 +2,191 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { formStyles } from '../styles';
+import { FormData } from '../../types';
 
-interface WebsiteTypeData {
-  websiteType: string;
-  otherDetails?: string;
-}
-
-interface WebsiteTypeStepProps {
-  onNext: (data: WebsiteTypeData) => void;
-  onBack: () => void;
-  initialData?: WebsiteTypeData;
-}
-
-const websiteTypes = [
+const WEBSITE_TYPES = [
   {
-    id: 'business',
-    title: 'Business Website',
-    description: 'Professional website to showcase your business and services',
+    id: 'brochure',
+    label: 'Brochure / Informational',
+    price: '$',
+    description: 'Showcase your business information and services',
+    features: [
+      'Company info',
+      'Service details',
+      'Team profiles',
+      'Contact forms',
+      'Location info'
+    ],
     icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
       </svg>
-    ),
+    )
   },
   {
     id: 'ecommerce',
-    title: 'E-commerce',
-    description: 'Online store with product catalog and secure checkout',
+    label: 'E-commerce Store',
+    price: '$',
+    description: 'Sell products or services online',
+    features: [
+      'Product catalog',
+      'Shopping cart',
+      'Secure checkout',
+      'Inventory management',
+      'Order tracking'
+    ],
     icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
-    ),
+    )
   },
   {
-    id: 'platform',
-    title: 'Web Application',
-    description: 'Custom platform with user accounts and advanced features',
+    id: 'service_business',
+    label: 'Service Business',
+    price: '$$',
+    description: 'Professional service business platform',
+    features: [
+      'Service catalog',
+      'Booking system',
+      'Client portal',
+      'Quote generator',
+      'Portfolio showcase',
+      'Testimonials'
+    ],
     icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
       </svg>
-    ),
+    )
   },
   {
-    id: 'other',
-    title: 'Other',
-    description: 'Tell us about your unique project requirements',
+    id: 'restaurant',
+    label: 'Restaurant Website',
+    price: '$$',
+    description: 'Complete restaurant management and ordering system',
+    features: [
+      'Online ordering',
+      'Menu management',
+      'Table reservations',
+      'Delivery integration',
+      'Customer reviews',
+      'Location maps'
+    ],
     icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
       </svg>
-    ),
+    )
   },
+  {
+    id: 'landing_funnel',
+    label: 'Landing Page / Funnel',
+    price: '$$',
+    description: 'Focused on converting visitors into leads or customers',
+    features: [
+      'Lead capture',
+      'Call-to-action focused',
+      'Sales funnel',
+      'A/B testing',
+      'Analytics tracking'
+    ],
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+      </svg>
+    )
+  },
+  {
+    id: 'marketplace',
+    label: 'Marketplace Platform',
+    price: '$$',
+    description: 'Connect buyers and sellers or service providers',
+    features: [
+      'Vendor management',
+      'Product listings',
+      'Order management',
+      'Commission system',
+      'Messaging system'
+    ],
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    )
+  },
+  {
+    id: 'all_in_one',
+    label: 'All-in-One Business Platform',
+    price: '$$$',
+    description: 'Complete business solution with multiple integrated features',
+    features: [
+      'Landing pages',
+      'E-commerce store',
+      'Member portal',
+      'Blog platform',
+      'Appointment booking',
+      'Customer dashboard'
+    ],
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+      </svg>
+    )
+  },
+  {
+    id: 'saas_platform',
+    label: 'SaaS Platform',
+    price: '$$$',
+    description: 'Software-as-a-Service application platform',
+    features: [
+      'User dashboard',
+      'Subscription billing',
+      'API access',
+      'Documentation',
+      'Support system',
+      'Usage analytics'
+    ],
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    )
+  }
 ];
 
-export default function WebsiteTypeStep({ onNext, onBack, initialData }: WebsiteTypeStepProps) {
-  const [selectedType, setSelectedType] = useState<string>(initialData?.websiteType || '');
-  const [otherDetails, setOtherDetails] = useState<string>(initialData?.otherDetails || '');
-  const [error, setError] = useState<string>('');
+interface WebsiteTypeStepProps {
+  formData: FormData;
+  onNext: () => void;
+  onBack: () => void;
+  updateFormData: (data: Partial<FormData>) => void;
+}
 
-  const handleNext = () => {
+export default function WebsiteTypeStep({ formData, onNext, onBack, updateFormData }: WebsiteTypeStepProps) {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [selectedType, setSelectedType] = useState<string>(formData.websiteType || '');
+
+  const handleWebsiteTypeSelect = (typeId: string) => {
+    console.log('Selected website type:', typeId);
+    setSelectedType(typeId);
+    setErrors({});
+  };
+
+  const handleSubmit = () => {
+    console.log('Submitting with type:', selectedType);
     if (!selectedType) {
-      setError('Please select a website type');
+      setErrors({ websiteType: 'Please select a website type' });
       return;
     }
-
-    if (selectedType === 'other' && !otherDetails) {
-      setError('Please provide details about your project');
-      return;
-    }
-
-    onNext({
+    
+    const updatedData = { 
       websiteType: selectedType,
-      ...(selectedType === 'other' && { otherDetails }),
-    });
+      websiteTypeDetails: formData.websiteTypeDetails 
+    };
+    console.log('Updating form data:', updatedData);
+    updateFormData(updatedData);
+    onNext();
   };
 
   return (
@@ -84,94 +194,106 @@ export default function WebsiteTypeStep({ onNext, onBack, initialData }: Website
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
+      className={formStyles.section}
     >
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">
-          What type of website do you need?
+      <div className={formStyles.header.wrapper}>
+        <h2 className={formStyles.header.title}>
+          Website Type
         </h2>
-        <p className="mt-2 text-gray-600">
-          Choose the option that best describes your project.
+        <p className={formStyles.header.description}>
+          Select the primary purpose and structure of your website
         </p>
       </div>
 
-      {error && (
-        <p className="text-sm text-red-600">
-          {error}
-        </p>
-      )}
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {websiteTypes.map((type) => (
-          <button
-            key={type.id}
-            onClick={() => {
-              setSelectedType(type.id);
-              setError('');
-            }}
-            className={`relative flex flex-col items-start rounded-lg border-2 p-4 text-left hover:border-primary focus:outline-none ${
-              selectedType === type.id
-                ? 'border-primary bg-primary/5'
-                : 'border-gray-200'
-            }`}
-          >
-            <div className={`rounded-lg p-2 ${
-              selectedType === type.id
-                ? 'bg-primary/10 text-primary'
-                : 'bg-gray-100 text-gray-600'
-            }`}>
-              {type.icon}
-            </div>
-            <h3 className="mt-4 text-lg font-semibold text-gray-900">
-              {type.title}
-            </h3>
-            <p className="mt-1 text-sm text-gray-500">
-              {type.description}
-            </p>
-          </button>
-        ))}
-      </div>
-
-      {selectedType === 'other' && (
+      <div className="space-y-8">
         <div>
-          <label htmlFor="otherDetails" className="block text-sm font-medium text-gray-700">
-            Project Details
+          <label className={formStyles.field.label}>
+            Primary Website Type
+          </label>
+          <div className={formStyles.grid.cols['2']}>
+            {WEBSITE_TYPES.map((type) => (
+              <button
+                key={type.id}
+                type="button"
+                onClick={() => handleWebsiteTypeSelect(type.id)}
+                className={`
+                  relative group
+                  ${formStyles.card.base}
+                  ${selectedType === type.id
+                    ? formStyles.card.selected
+                    : formStyles.card.unselected}
+                `}
+              >
+                <div className="absolute -top-2.5 -right-2.5">
+                  <span className={`
+                    inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold
+                    ${type.price === '$' ? 'bg-gray-100 text-gray-600' : ''}
+                    ${type.price === '$$' ? 'bg-amber-100 text-amber-800' : ''}
+                    ${type.price === '$$$' ? 'bg-violet-100 text-violet-800' : ''}
+                    shadow-sm
+                  `}>
+                    {type.price}
+                  </span>
+                </div>
+                <div className="relative flex items-start">
+                  <div className={`${formStyles.card.icon.base} ${
+                    selectedType === type.id
+                      ? formStyles.card.icon.selected
+                      : formStyles.card.icon.unselected
+                  }`}>
+                    {type.icon}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium">{type.label}</span>
+                    <span className="mt-1 text-xs text-gray-500">{type.description}</span>
+                    <div className="mt-3 flex flex-wrap gap-1">
+                      {type.features.map(feature => (
+                        <span 
+                          key={feature}
+                          className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+          {errors.websiteType && (
+            <p className={formStyles.field.error}>{errors.websiteType}</p>
+          )}
+        </div>
+
+        <div className={formStyles.field.wrapper}>
+          <label className={formStyles.field.label}>
+            Additional Requirements
           </label>
           <textarea
-            id="otherDetails"
-            name="otherDetails"
+            value={formData.websiteTypeDetails || ''}
+            onChange={(e) => updateFormData({ websiteTypeDetails: e.target.value })}
+            className={formStyles.field.textarea}
+            placeholder="Describe any specific requirements or combinations of the above types..."
             rows={4}
-            value={otherDetails}
-            onChange={(e) => {
-              setOtherDetails(e.target.value);
-              setError('');
-            }}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-            placeholder="Please describe your project requirements..."
           />
         </div>
-      )}
+      </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-6">
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+          className={`${formStyles.button.base} ${formStyles.button.secondary}`}
         >
-          <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
           Back
         </button>
         <button
           type="button"
-          onClick={handleNext}
-          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          onClick={handleSubmit}
+          className={`${formStyles.button.base} ${formStyles.button.primary}`}
         >
-          Next
-          <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
+          Next Step
         </button>
       </div>
     </motion.div>

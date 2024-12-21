@@ -3,12 +3,7 @@
 import { useState } from 'react';
 import { FormData } from './types';
 import ConsultationForm from './components/ConsultationForm';
-import BusinessInfoStep from './components/steps/BusinessInfoStep';
-import ProjectDetailsStep from './components/steps/ProjectDetailsStep';
-import WebsiteTypeStep from './components/steps/WebsiteTypeStep';
-import BudgetTimelineStep from './components/steps/BudgetTimelineStep';
-import ContactInfoStep from './components/steps/ContactInfoStep';
-import ScheduleCallStep from './components/steps/ScheduleCallStep';
+import BackgroundPattern from './components/BackgroundPattern';
 
 export default function ConsultationPage() {
   const [formData, setFormData] = useState<FormData>({
@@ -49,8 +44,12 @@ export default function ConsultationPage() {
   });
 
   return (
-    <main className="py-24 sm:py-32">
-      <ConsultationForm />
+    <main className="relative min-h-screen py-24 sm:py-32 overflow-hidden">
+      <BackgroundPattern />
+      
+      <div className="relative z-10">
+        <ConsultationForm />
+      </div>
     </main>
   );
 } 
